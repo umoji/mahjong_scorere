@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C459219F-B5C2-4C4B-B768-BBAE0919345F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BD2F7CAE415D25CA59C4EB8E78D4D289710286D9</key>
+		<string>github.com:umoji/mahjong_scorere.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>mahjong_scorere.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BD2F7CAE415D25CA59C4EB8E78D4D289710286D9</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:umoji/mahjong_scorere.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BD2F7CAE415D25CA59C4EB8E78D4D289710286D9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BD2F7CAE415D25CA59C4EB8E78D4D289710286D9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mahjong_scorere</string>
+		</dict>
+	</array>
+</dict>
+</plist>
