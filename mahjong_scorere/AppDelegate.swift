@@ -8,22 +8,41 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    struct Player{
-        var name:String //名前
-        var point: Int//点数
-    }
-    
-    var message:String?
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let config = Realm.Configuration(
+            // 新しいスキーマバージョンを設定します。以前のバージョンより大きくなければなりません。
+            // （スキーマバージョンを設定したことがなければ、最初は0が設定されています）
+            schemaVersion: 1,
+            
+            // マイグレーション処理を記述します。古いスキーマバージョンのRealmを開こうとすると
+            // 自動的にマイグレーションが実行されます。
+            migrationBlock: { migration, oldSchemaVersion in
+                // 最初のマイグレーションの場合、`oldSchemaVersion`は0です
+                if (oldSchemaVersion < 2) {
+                    migration.enumerate(Player.className()) { oldObject, newObject in
+                        // firstNameとlastNameをfullNameプロパティに結合します
+                        let point = oldObject!["point"] as! Int
+                        newObject!["money"] = point
+                        newObject!["point_list"] = []
+                        newObject!["rank_list"] = []
+                    }
+                }
+        })
+        
+        // デフォルトRealmに新しい設定を適用します
+        Realm.Configuration.defaultConfiguration = config
+        
+        // Realmファイルを開こうとしたときスキーマバージョンが異なれば、
+        // 自動的にマイグレーションが実行されます
+
         return true
     }
 
@@ -56,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.mito.mahjong_scorere" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -69,10 +88,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("mahjong_scorere.sqlite")
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Xipe_Tech.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
             coordinator = nil
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -84,6 +105,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            
         }
         
         return coordinator
@@ -103,12 +128,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data Saving support
 
     func saveContext () {
-        if let moc = self.managedObjectContext {
-            var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
+        if managedObjectContext!.hasChanges {
+            do {
+                try managedObjectContext!.save()
+            } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
                 abort()
             }
         }

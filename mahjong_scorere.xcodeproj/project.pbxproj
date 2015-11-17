@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		102F41E9282472FCB284AE90 /* libPods-mahjong_scorereTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 924BB4BB0CDB9703981C48B1 /* libPods-mahjong_scorereTests.a */; };
+		379EEACF5D5B08578599E6C4 /* libPods-mahjong_scorere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C11616C9E248C76177752FB /* libPods-mahjong_scorere.a */; };
+		641A3D021BF0473E0042F042 /* ShiharaiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641A3D011BF0473E0042F042 /* ShiharaiViewController.swift */; };
+		64493B9A1BE3CEB600BA7E77 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64493B991BE3CEB600BA7E77 /* Player.swift */; };
 		6486EDE81BDE1EDF004B5DCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6486EDE71BDE1EDF004B5DCF /* AppDelegate.swift */; };
 		6486EDEB1BDE1EDF004B5DCF /* mahjong_scorere.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6486EDE91BDE1EDF004B5DCF /* mahjong_scorere.xcdatamodeld */; };
 		6486EDED1BDE1EDF004B5DCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6486EDEC1BDE1EDF004B5DCF /* ViewController.swift */; };
@@ -18,8 +22,7 @@
 		6486EE0D1BDE1FC9004B5DCF /* SankasyaViewControllerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6486EE0B1BDE1FC9004B5DCF /* SankasyaViewControllerTableViewController.xib */; };
 		6486EE101BDE1FF5004B5DCF /* KekkaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6486EE0E1BDE1FF5004B5DCF /* KekkaViewController.swift */; };
 		6486EE111BDE1FF5004B5DCF /* KekkaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6486EE0F1BDE1FF5004B5DCF /* KekkaViewController.xib */; };
-		6486EE141BDE200A004B5DCF /* SiharaiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6486EE121BDE200A004B5DCF /* SiharaiViewController.swift */; };
-		6486EE151BDE200A004B5DCF /* SiharaiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6486EE131BDE200A004B5DCF /* SiharaiViewController.xib */; };
+		91BC86A5BE0AD08F507D7442 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D17BE60BC8D94933561094 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		085111784507581E296C430A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		1C11616C9E248C76177752FB /* libPods-mahjong_scorere.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mahjong_scorere.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		641A3D011BF0473E0042F042 /* ShiharaiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiharaiViewController.swift; sourceTree = "<group>"; };
+		6421BD061BE5DB8A00D22FD7 /* mahjong_scorere_Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mahjong_scorere_Bridging_Header.h; sourceTree = "<group>"; };
+		64493B991BE3CEB600BA7E77 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		6486EDE21BDE1EDF004B5DCF /* mahjong_scorere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mahjong_scorere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6486EDE61BDE1EDF004B5DCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6486EDE71BDE1EDF004B5DCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -44,12 +52,15 @@
 		6486EDFA1BDE1EDF004B5DCF /* mahjong_scorereTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mahjong_scorereTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6486EDFF1BDE1EDF004B5DCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6486EE001BDE1EDF004B5DCF /* mahjong_scorereTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mahjong_scorereTests.swift; sourceTree = "<group>"; };
-		6486EE0A1BDE1FC9004B5DCF /* SankasyaViewControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SankasyaViewControllerTableViewController.swift; sourceTree = "<group>"; };
+		6486EE0A1BDE1FC9004B5DCF /* SankasyaViewControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SankasyaViewControllerTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		6486EE0B1BDE1FC9004B5DCF /* SankasyaViewControllerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SankasyaViewControllerTableViewController.xib; sourceTree = "<group>"; };
-		6486EE0E1BDE1FF5004B5DCF /* KekkaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KekkaViewController.swift; sourceTree = "<group>"; };
+		6486EE0E1BDE1FF5004B5DCF /* KekkaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KekkaViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		6486EE0F1BDE1FF5004B5DCF /* KekkaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KekkaViewController.xib; sourceTree = "<group>"; };
-		6486EE121BDE200A004B5DCF /* SiharaiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiharaiViewController.swift; sourceTree = "<group>"; };
-		6486EE131BDE200A004B5DCF /* SiharaiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SiharaiViewController.xib; sourceTree = "<group>"; };
+		72D17BE60BC8D94933561094 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		781F9013CB7B8BEEA8CF02AE /* Pods-mahjong_scorereTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mahjong_scorereTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mahjong_scorereTests/Pods-mahjong_scorereTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F1ADD5A0D80CFD9362051C7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		924BB4BB0CDB9703981C48B1 /* libPods-mahjong_scorereTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mahjong_scorereTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1A2215B8D0498EC88A1EB0B /* Pods-mahjong_scorereTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mahjong_scorereTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mahjong_scorereTests/Pods-mahjong_scorereTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				379EEACF5D5B08578599E6C4 /* libPods-mahjong_scorere.a in Frameworks */,
+				91BC86A5BE0AD08F507D7442 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,18 +77,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				102F41E9282472FCB284AE90 /* libPods-mahjong_scorereTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03C91F60EFF879B770BA7E18 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				085111784507581E296C430A /* Pods.debug.xcconfig */,
+				8F1ADD5A0D80CFD9362051C7 /* Pods.release.xcconfig */,
+				781F9013CB7B8BEEA8CF02AE /* Pods-mahjong_scorereTests.debug.xcconfig */,
+				A1A2215B8D0498EC88A1EB0B /* Pods-mahjong_scorereTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6486EDD91BDE1EDF004B5DCF = {
 			isa = PBXGroup;
 			children = (
 				6486EDE41BDE1EDF004B5DCF /* mahjong_scorere */,
 				6486EDFD1BDE1EDF004B5DCF /* mahjong_scorereTests */,
 				6486EDE31BDE1EDF004B5DCF /* Products */,
+				03C91F60EFF879B770BA7E18 /* Pods */,
+				8CC6961C8E6158668A0AD353 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,9 +118,11 @@
 		6486EDE41BDE1EDF004B5DCF /* mahjong_scorere */ = {
 			isa = PBXGroup;
 			children = (
+				6421BD061BE5DB8A00D22FD7 /* mahjong_scorere_Bridging_Header.h */,
 				6486EDE71BDE1EDF004B5DCF /* AppDelegate.swift */,
 				6486EDEC1BDE1EDF004B5DCF /* ViewController.swift */,
 				6486EDEE1BDE1EDF004B5DCF /* Main.storyboard */,
+				64493B991BE3CEB600BA7E77 /* Player.swift */,
 				6486EDF11BDE1EDF004B5DCF /* Images.xcassets */,
 				6486EDF31BDE1EDF004B5DCF /* LaunchScreen.xib */,
 				6486EDE91BDE1EDF004B5DCF /* mahjong_scorere.xcdatamodeld */,
@@ -133,8 +162,7 @@
 		6486EE161BDE201A004B5DCF /* Siharai */ = {
 			isa = PBXGroup;
 			children = (
-				6486EE121BDE200A004B5DCF /* SiharaiViewController.swift */,
-				6486EE131BDE200A004B5DCF /* SiharaiViewController.xib */,
+				641A3D011BF0473E0042F042 /* ShiharaiViewController.swift */,
 			);
 			name = Siharai;
 			sourceTree = "<group>";
@@ -157,6 +185,16 @@
 			name = Kekka;
 			sourceTree = "<group>";
 		};
+		8CC6961C8E6158668A0AD353 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C11616C9E248C76177752FB /* libPods-mahjong_scorere.a */,
+				924BB4BB0CDB9703981C48B1 /* libPods-mahjong_scorereTests.a */,
+				72D17BE60BC8D94933561094 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -164,9 +202,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6486EE041BDE1EDF004B5DCF /* Build configuration list for PBXNativeTarget "mahjong_scorere" */;
 			buildPhases = (
+				141CFBD2473113ECEE15C374 /* Check Pods Manifest.lock */,
 				6486EDDE1BDE1EDF004B5DCF /* Sources */,
 				6486EDDF1BDE1EDF004B5DCF /* Frameworks */,
 				6486EDE01BDE1EDF004B5DCF /* Resources */,
+				A82723583B9766EA478903CB /* Embed Pods Frameworks */,
+				A2ECF9598E3F3878E0314A53 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -181,9 +222,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6486EE071BDE1EDF004B5DCF /* Build configuration list for PBXNativeTarget "mahjong_scorereTests" */;
 			buildPhases = (
+				CCAD42A913B64C2F8BDB4945 /* Check Pods Manifest.lock */,
 				6486EDF61BDE1EDF004B5DCF /* Sources */,
 				6486EDF71BDE1EDF004B5DCF /* Frameworks */,
 				6486EDF81BDE1EDF004B5DCF /* Resources */,
+				54858BDF0A27258223E62CB5 /* Embed Pods Frameworks */,
+				8774BEB379EA2F91417167C2 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,7 +245,8 @@
 		6486EDDA1BDE1EDF004B5DCF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Tomoya Yoshizawa";
 				TargetAttributes = {
 					6486EDE11BDE1EDF004B5DCF = {
@@ -239,7 +284,6 @@
 			files = (
 				6486EDF01BDE1EDF004B5DCF /* Main.storyboard in Resources */,
 				6486EDF51BDE1EDF004B5DCF /* LaunchScreen.xib in Resources */,
-				6486EE151BDE200A004B5DCF /* SiharaiViewController.xib in Resources */,
 				6486EDF21BDE1EDF004B5DCF /* Images.xcassets in Resources */,
 				6486EE0D1BDE1FC9004B5DCF /* SankasyaViewControllerTableViewController.xib in Resources */,
 				6486EE111BDE1FF5004B5DCF /* KekkaViewController.xib in Resources */,
@@ -255,6 +299,99 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		141CFBD2473113ECEE15C374 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		54858BDF0A27258223E62CB5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mahjong_scorereTests/Pods-mahjong_scorereTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8774BEB379EA2F91417167C2 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mahjong_scorereTests/Pods-mahjong_scorereTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2ECF9598E3F3878E0314A53 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A82723583B9766EA478903CB /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCAD42A913B64C2F8BDB4945 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6486EDDE1BDE1EDF004B5DCF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -262,10 +399,11 @@
 			files = (
 				6486EDED1BDE1EDF004B5DCF /* ViewController.swift in Sources */,
 				6486EDEB1BDE1EDF004B5DCF /* mahjong_scorere.xcdatamodeld in Sources */,
-				6486EE141BDE200A004B5DCF /* SiharaiViewController.swift in Sources */,
 				6486EDE81BDE1EDF004B5DCF /* AppDelegate.swift in Sources */,
 				6486EE0C1BDE1FC9004B5DCF /* SankasyaViewControllerTableViewController.swift in Sources */,
+				64493B9A1BE3CEB600BA7E77 /* Player.swift in Sources */,
 				6486EE101BDE1FF5004B5DCF /* KekkaViewController.swift in Sources */,
+				641A3D021BF0473E0042F042 /* ShiharaiViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +466,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -390,26 +529,35 @@
 		};
 		6486EE051BDE1EDF004B5DCF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 085111784507581E296C430A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = mahjong_scorere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PODS_ROOT = /Users/tomoya/Documents/XcodeProjects/mahjong_scorere/Pods;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mito.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = mahjong_scorere/mahjong_scorere_Bridging_Header.h;
 			};
 			name = Debug;
 		};
 		6486EE061BDE1EDF004B5DCF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F1ADD5A0D80CFD9362051C7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = mahjong_scorere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PODS_ROOT = /Users/tomoya/Documents/XcodeProjects/mahjong_scorere/Pods;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mito.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = mahjong_scorere/mahjong_scorere_Bridging_Header.h;
 			};
 			name = Release;
 		};
 		6486EE081BDE1EDF004B5DCF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 781F9013CB7B8BEEA8CF02AE /* Pods-mahjong_scorereTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -422,6 +570,7 @@
 				);
 				INFOPLIST_FILE = mahjong_scorereTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mito.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mahjong_scorere.app/mahjong_scorere";
 			};
@@ -429,6 +578,7 @@
 		};
 		6486EE091BDE1EDF004B5DCF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1A2215B8D0498EC88A1EB0B /* Pods-mahjong_scorereTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -437,6 +587,7 @@
 				);
 				INFOPLIST_FILE = mahjong_scorereTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mito.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mahjong_scorere.app/mahjong_scorere";
 			};
@@ -461,6 +612,7 @@
 				6486EE061BDE1EDF004B5DCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6486EE071BDE1EDF004B5DCF /* Build configuration list for PBXNativeTarget "mahjong_scorereTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +621,7 @@
 				6486EE091BDE1EDF004B5DCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

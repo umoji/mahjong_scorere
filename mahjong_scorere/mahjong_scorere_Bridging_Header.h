@@ -9,5 +9,6 @@
 #ifndef mahjong_scorere_Bridging_Header_h
 #define mahjong_scorere_Bridging_Header_h
 
+#import <Realm/Realm.h>
 
 #endif /* mahjong_scorere_Bridging_Header_h */

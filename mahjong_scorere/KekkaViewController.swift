@@ -7,14 +7,14 @@
 //
 
 import UIKit
+import RealmSwift
 
 class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
-    struct Player{
-        var name:String //名前
-        var point: Int //点数
-    }
-    // 表示する値の配列.
-    var players:[String] = []
+    var players = [Player]()
+    var player1number = Int()
+    var player2number = Int()
+    var player3number = Int()
+    var player4number = Int()
     
     // Toolbar
     private var doneToolbar: UIToolbar!
@@ -31,42 +31,28 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var player2btn: UIButton!
     @IBOutlet weak var player3btn: UIButton!
     @IBOutlet weak var player4btn: UIButton!
+
     @IBAction func player1btnAction(sender: AnyObject) {
-        if(player1Table.hidden==true){
-            player1Table.hidden=false
-        }else{
-            player1Table.hidden=true
-        }
+        player1Table.hidden = !player1Table.hidden
     }
+    
     @IBAction func player2btnAction(sender: AnyObject) {
-        if(player2Table.hidden==true){
-            player2Table.hidden=false
-        }else{
-            player2Table.hidden=true
-        }
-
+        player2Table.hidden = !player2Table.hidden
     }
+    
     @IBAction func player3btnAction(sender: AnyObject) {
-        if(player3Table.hidden==true){
-            player3Table.hidden=false
-        }else{
-            player3Table.hidden=true
-        }
-
+        player3Table.hidden = !player4Table.hidden
     }
+    
     @IBAction func player4btnAction(sender: AnyObject) {
-        if(player4Table.hidden==true){
-            player4Table.hidden=false
-        }else{
-            player4Table.hidden=true
-        }
-
+        player4Table.hidden = !player4Table.hidden
     }
     
     override func viewDidLoad() {
         self.navigationItem.title = "結果";
         super.viewDidLoad()
-        
+        let realm = try! Realm()
+        players = realm.objects(Player).map{$0}
         //PlayerTableView
         player1Table.delegate = self
         player2Table.delegate = self
@@ -80,7 +66,6 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
         player2Table.hidden = true
         player3Table.hidden = true
         player4Table.hidden = true
-        
         //--- add UIToolBar on keyboard and Done button on UIToolBar ---//
         self.addDoneButtonOnKeyboard()
         point1.placeholder = "player1"
@@ -95,19 +80,21 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
         rate.keyboardType = UIKeyboardType.NumbersAndPunctuation
     }
     
+    
+    
     func addDoneButtonOnKeyboard()
     {
-        var doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
         doneToolbar.barStyle = UIBarStyle.BlackTranslucent
         
-        var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        var done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: Selector("doneButtonAction"))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: Selector("doneButtonAction"))
         
-        var items = NSMutableArray()
-        items.addObject(flexSpace)
-        items.addObject(done)
+        var items: [UIBarButtonItem]? = [UIBarButtonItem]()
+        items?.append(flexSpace)
+        items?.append(done)
         
-        doneToolbar.items = items as [AnyObject]
+        doneToolbar.items = items
         doneToolbar.sizeToFit()
         
         point1.inputAccessoryView = doneToolbar
@@ -127,80 +114,93 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     override func viewWillAppear(animated: Bool) {
-        var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-        var message = appDelegate.message
-        
-        if(contains(players,message!)){
-            println("\(players)")
-            println("\(message!)")
-        }else{
-            players.append("\(message!)")
-            println("\(players)")
-            println("\(message!)")
-        }
-        
-        players.append("\(message!)")
-        println("\(players)")
-        println("\(message!)")
+        let realm = try! Realm()
+        players = realm.objects(Player).map{$0}
+        player1Table.reloadData()
+        player2Table.reloadData()
+        player3Table.reloadData()
+        player4Table.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(player1Table: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return players.count
+        if(players.count == 0){
+            return 1
+        }else{
+            return Int(players.count)
+        }
     }
     
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell = UITableViewCell(
-            style: UITableViewCellStyle.Value1,
-            reuseIdentifier:"Cell" )
-        cell.textLabel?.text = "\(players[indexPath.row])"
-        cell.textLabel?.textColor = UIColor.blackColor()
-        cell.textLabel?.font = UIFont.systemFontOfSize(20)
-        return cell
+        if(players.count == 0){
+            let cell:UITableViewCell = UITableViewCell(
+                style: UITableViewCellStyle.Value1,
+                reuseIdentifier:"Cell" )
+            cell.textLabel?.text = "No Player"
+            cell.textLabel?.textColor = UIColor.blackColor()
+            cell.textLabel?.font = UIFont.systemFontOfSize(20)
+            cell.textLabel?.adjustsFontSizeToFitWidth = true
+            return cell
+        }else{
+            let cell:UITableViewCell = UITableViewCell(
+                style: UITableViewCellStyle.Value1,
+                reuseIdentifier:"Cell" )
+            cell.textLabel?.text = "\(players[indexPath.row].name)"
+            cell.textLabel?.textColor = UIColor.blackColor()
+            cell.textLabel?.font = UIFont.systemFontOfSize(20)
+            cell.textLabel?.adjustsFontSizeToFitWidth = true
+            return cell
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         if(tableView == player1Table){
-            player1btn.setTitle("\(players[indexPath.row])", forState: UIControlState.Normal)
+            player1btn.setTitle("\(players[indexPath.row].name)", forState: UIControlState.Normal)
+            player1number = indexPath.row
             player1Table.hidden = true
         }else if(tableView == player2Table){
-            player2btn.setTitle("\(players[indexPath.row])", forState: UIControlState.Normal)
+            player2btn.setTitle("\(players[indexPath.row].name)", forState: UIControlState.Normal)
+            player2number = indexPath.row
             player2Table.hidden = true
         }else if(tableView == player3Table){
-            player3btn.setTitle("\(players[indexPath.row])", forState: UIControlState.Normal)
+            player3btn.setTitle("\(players[indexPath.row].name)", forState: UIControlState.Normal)
+            player3number = indexPath.row
             player3Table.hidden = true
         }else if(tableView == player4Table){
-            player4btn.setTitle("\(players[indexPath.row])", forState: UIControlState.Normal)
+            player4btn.setTitle("\(players[indexPath.row].name)", forState: UIControlState.Normal)
+            player4number = indexPath.row
             player4Table.hidden = true
         }else{
-            
         }
     }
     
     @IBAction func resultButton(sender: UIButton) {
-        var doublepoint1:Double = NSString(string: point1.text).doubleValue
-        var doublepoint2:Double = NSString(string: point2.text).doubleValue
-        var doublepoint3:Double = NSString(string: point3.text).doubleValue
-        var doublepoint4:Double = NSString(string: point4.text).doubleValue
-        var doublerate:Double = NSString(string: rate.text).doubleValue
-        var result1 = doublepoint1 * doublerate
-        var result2 = doublepoint2 * doublerate
-        var result3 = doublepoint3 * doublerate
-        var result4 = doublepoint4 * doublerate
-        var players_order = ["\(player1btn.currentTitle!)","\(player2btn.currentTitle!)","\(player3btn.currentTitle!)","\(player4btn.currentTitle!)"]
-        var set = NSOrderedSet(array: players_order)
-        var result_order = set.array as! [String]
+        let doublepoint1:Double = NSString(string: point1.text!).doubleValue
+        let doublepoint2:Double = NSString(string: point2.text!).doubleValue
+        let doublepoint3:Double = NSString(string: point3.text!).doubleValue
+        let doublepoint4:Double = NSString(string: point4.text!).doubleValue
+        let doublerate = NSString(string: rate.text!).doubleValue
+        let result1 = doublepoint1 * doublerate
+        let result2 = doublepoint2 * doublerate
+        let result3 = doublepoint3 * doublerate
+        let result4 = doublepoint4 * doublerate
+        let pointTextFields: [UITextField] = [point1, point2, point3, point4]
+        let results = pointTextFields.map { NSString(string: $0.text!).doubleValue * doublerate }
         
-        if(doublepoint1+doublepoint2+doublepoint3+doublepoint4 != 0){
+        let players_order = ["\(player1btn.currentTitle!)","\(player2btn.currentTitle!)","\(player3btn.currentTitle!)","\(player4btn.currentTitle!)"]
+        let set = NSOrderedSet(array: players_order)
+        let result_order = set.array as! [String]
+
+        let sum = results.reduce(0, combine: +)        
+        
+        if sum != 0 {
             let alertController = UIAlertController(title: "Alert", message: "Sum of points is not 0!! ", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
@@ -210,7 +210,7 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
-        }else if(player1btn.currentTitle! == "Player1" || player2btn.currentTitle! == "Player2" || player3btn.currentTitle! == "Player3" || player4btn.currentTitle! == "Player4"){
+        }else if player1btn.currentTitle! == "Player1" || player2btn.currentTitle! == "Player2" || player3btn.currentTitle! == "Player3" || player4btn.currentTitle! == "Player4" {
             let alertController = UIAlertController(title: "Alert", message: "Players are not filled!! ", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
@@ -221,12 +221,74 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
         }else{
-            let alertController = UIAlertController(title: "Congratulations!", message: "1st:\(player1btn.currentTitle!)...\(Int(result1)*100)\n2nd:\(player2btn.currentTitle!)...\(Int(result2)*100)\n3rd\(player3btn.currentTitle!)...\(Int(result3)*100)\n4th:\(player4btn.currentTitle!)...\(Int(result4)*100)", preferredStyle: .Alert)
-            
+            let alertController = UIAlertController(title: "Congratulations!", message: "1st:\(player1btn.currentTitle!)...\(Int(result1*100.0))\n2nd:\(player2btn.currentTitle!)...\(Int(result2*100.0))\n3rd\(player3btn.currentTitle!)...\(Int(result3*100.0))\n4th:\(player4btn.currentTitle!)...\(Int(result4*100.0))", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
         }
+//        let reload_player1 = Player()
+
+//        reload_player1.name = self.players[self.player1number].name
+//        reload_player1.id = self.players[self.player1number].id
+//        reload_player1.money = self.players[self.player1number].money + Int(result1*100.0)
+//        reload_player1.point_list = self.players[self.player1number].point_list
+//        reload_player1.rank_list = self.players[self.player1number].rank_list
+//        let reload_player2 = Player()
+//        reload_player2.name = self.players[self.player2number].name
+//        reload_player2.id = self.players[self.player2number].id
+//        reload_player2.money = self.players[self.player2number].money + Int(result2*100.0)
+//        let reload_player3 = Player()
+//        reload_player3.name = self.players[self.player3number].name
+//        reload_player3.id = self.players[self.player3number].id
+//        reload_player3.money = self.players[self.player3number].money + Int(result3*100.0)
+//        let reload_player4 = Player()
+//        reload_player4.name = self.players[self.player4number].name
+//        reload_player4.id = self.players[self.player4number].id
+//        reload_player4.money = self.players[self.player4number].money + Int(result4*100.0)
+//        let realm = try! Realm()
+//        try! realm.write {
+//            realm.add(reload_player1, update: true)
+//            realm.add(reload_player2, update: true)
+//            realm.add(reload_player3, update: true)
+//            realm.add(reload_player4, update: true)
+//        }
+        let tensu1 = Points()
+        let tensu2 = Points()
+        let tensu3 = Points()
+        let tensu4 = Points()
+        let juni1 = Ranks()
+        let juni2 = Ranks()
+        let juni3 = Ranks()
+        let juni4 = Ranks()
+        tensu1.point = Int(self.point1.text!)!
+        tensu2.point = Int(self.point2.text!)!
+        tensu3.point = Int(self.point3.text!)!
+        tensu4.point = Int(self.point4.text!)!
+        juni1.rank = 1
+        juni2.rank = 2
+        juni3.rank = 3
+        juni4.rank = 4
+        let realm = try! Realm()
+        try! realm.write{
+            self.players[self.player1number].money += Int(result1*100)
+            self.players[self.player1number].point_list.append(tensu1)
+            self.players[self.player1number].rank_list.append(juni1)
+            self.players[self.player2number].money += Int(result2*100)
+            self.players[self.player1number].point_list.append(tensu2)
+            self.players[self.player1number].rank_list.append(juni2)
+            self.players[self.player3number].money += Int(result3*100)
+            self.players[self.player1number].point_list.append(tensu3)
+            self.players[self.player1number].rank_list.append(juni3)
+            self.players[self.player4number].money += Int(result4*100)
+            self.players[self.player1number].point_list.append(tensu4)
+            self.players[self.player1number].rank_list.append(juni4)
+            print(self.players)
+        }
+        print("doublepoint1:\(doublepoint1)")
+        print("doublerate:\(doublerate)")
+        print("result1:\(result1)")
+        print("Int(result1)*100:\(Int(result1*100.0))")
+        print(players[self.player1number].money)
     }
     
 }
