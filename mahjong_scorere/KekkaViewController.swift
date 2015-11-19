@@ -274,21 +274,15 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.players[self.player1number].point_list.append(tensu1)
             self.players[self.player1number].rank_list.append(juni1)
             self.players[self.player2number].money += Int(result2*100)
-            self.players[self.player1number].point_list.append(tensu2)
-            self.players[self.player1number].rank_list.append(juni2)
+            self.players[self.player2number].point_list.append(tensu2)
+            self.players[self.player2number].rank_list.append(juni2)
             self.players[self.player3number].money += Int(result3*100)
-            self.players[self.player1number].point_list.append(tensu3)
-            self.players[self.player1number].rank_list.append(juni3)
+            self.players[self.player3number].point_list.append(tensu3)
+            self.players[self.player3number].rank_list.append(juni3)
             self.players[self.player4number].money += Int(result4*100)
-            self.players[self.player1number].point_list.append(tensu4)
-            self.players[self.player1number].rank_list.append(juni4)
-            print(self.players)
+            self.players[self.player4number].point_list.append(tensu4)
+            self.players[self.player4number].rank_list.append(juni4)
         }
-        print("doublepoint1:\(doublepoint1)")
-        print("doublerate:\(doublerate)")
-        print("result1:\(result1)")
-        print("Int(result1)*100:\(Int(result1*100.0))")
-        print(players[self.player1number].money)
     }
     
 }

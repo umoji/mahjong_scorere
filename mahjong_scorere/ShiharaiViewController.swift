@@ -20,6 +20,7 @@ class SiharaiViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var player2Table: UITableView!
     @IBOutlet weak var player1btn: UIButton!
     @IBOutlet weak var player2btn: UIButton!
+    @IBOutlet weak var paybtn: UIButton!
     
     @IBAction func player1btnAction(sender: AnyObject) {
         player1Table.hidden = !player1Table.hidden
@@ -29,6 +30,21 @@ class SiharaiViewController: UIViewController, UITableViewDataSource, UITableVie
         player2Table.hidden = !player2Table.hidden
     }
     
+    @IBAction func paybtnAction(sender: AnyObject) {
+        let realm = try! Realm()
+        try! realm.write{
+            
+            self.players[self.player1number].money -= Int(self.point.text!)!
+            self.players[self.player2number].money += Int(self.point.text!)!
+        }
+        let alertController = UIAlertController(title: "Thank you!", message: "\(players[player1number].name) paid \(point.text!) to \(players[player2number].name)!", preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+        
+    }
+    
+
     override func viewDidLoad() {
         self.navigationItem.title = "支払";
         super.viewDidLoad()
@@ -116,7 +132,7 @@ class SiharaiViewController: UIViewController, UITableViewDataSource, UITableVie
             player1Table.hidden = true
         }else if(tableView == player2Table){
             player2btn.setTitle("\(players[indexPath.row].name)", forState: UIControlState.Normal)
-            player1number = indexPath.row
+            player2number = indexPath.row
             player2Table.hidden = true
         }else{
         }

@@ -12,7 +12,6 @@ import RealmSwift
 class SankasyaViewControllerTableViewController: UITableViewController {
     var players = [Player]()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 90.0;
@@ -35,41 +34,29 @@ class SankasyaViewControllerTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        // 先にデータを更新する
-        print("delete\(indexPath.row)")
         let realm = try! Realm()
-        let player = realm.objects(Player).map { $0 }[indexPath.row]
-        try! realm.write {
-            realm.delete(player)
+        if indexPath.row == self.players.count - 1 {
+            try! realm.write {
+                realm.delete(self.players[self.players.count-1])
+            }
+            players = realm.objects(Player).map { $0 }
+            self.tableView.reloadData()
+        }else{
+            for(var i = indexPath.row; i <= Int(self.players.count)-2; i++) {
+                let shift_player = Player()
+                shift_player.name = self.players[i+1].name
+                shift_player.id = self.players[i+1].id - 1
+                shift_player.money = self.players[i+1].money
+                try! realm.write {
+                    realm.add(shift_player, update: true)
+                }
+            }
+            try! realm.write {
+                realm.delete(self.players[self.players.count-1])
+            }
+            players = realm.objects(Player).map { $0 }
+            self.tableView.reloadData()
         }
-        
-        
-        players = realm.objects(Player).map { $0 }
-        
-        self.tableView.reloadData()
-//        if indexPath.row == self.players.count - 1 {
-//            try! realm.write {
-//                realm.delete(self.players[self.players.count-1])
-//            }
-//            self.tableView.reloadData()
-//        }else{
-//            for(var i = indexPath.row; i <= Int(self.players.count)-2; i++) {
-//                let shift_player = Player()
-//                shift_player.name = self.players[i+1].name
-//                shift_player.id = self.players[i+1].id - 1
-//                shift_player.money = self.players[i+1].money
-//                
-//                try! realm.write {
-//                    realm.add(shift_player, update: true)
-//                }
-//            }
-//            
-//            try! realm.write {
-//                realm.delete(self.players[self.players.count-1])
-//            }
-//            
-//            self.tableView.reloadData()
-//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -129,6 +116,8 @@ class SankasyaViewControllerTableViewController: UITableViewController {
     
     @IBAction func inputFieldBtn(sender: UIButton) {
         var inputTextField: UITextField?
+        var exist = false
+        let realm = try! Realm()
         
         let alertController: UIAlertController = UIAlertController(title: "Newcomer!!", message: "Input your Name", preferredStyle: .Alert)
         
@@ -137,36 +126,39 @@ class SankasyaViewControllerTableViewController: UITableViewController {
         }
         alertController.addAction(cancelAction)
         
-        let realm = try! Realm()
         let logintAction: UIAlertAction = UIAlertAction(title: "Create", style: .Default) { action -> Void in
             print("Pushed Create")
-            let newID: Int
-            let newplayer = Player()
-           
-            if let lastPlayer = realm.objects(Player).sorted("id").last {
-                newID = lastPlayer.id + 1
-            } else {
-                newID = 0
+            for (var j=0; j<self.players.count; j++){
+                if (self.players[j].name == inputTextField!.text!)  {
+                    exist = true
+                }
             }
-            
-            newplayer.name = inputTextField!.text!
-            newplayer.money = 0
-            newplayer.id = newID
-            newplayer.point_list.appendContentsOf([])
-            newplayer.rank_list.appendContentsOf([])
-            
-            print(self.players)
-            print(newplayer)
-            
-            try! realm.write {
-                realm.add(newplayer)
+            if exist == false{
+                let newID: Int
+                let newplayer = Player()
+                if let lastPlayer = realm.objects(Player).sorted("id").last {
+                    newID = lastPlayer.id + 1
+                } else {
+                    newID = 0
+                }
+                
+                newplayer.name = inputTextField!.text!
+                newplayer.money = 0
+                newplayer.id = newID
+                newplayer.point_list.appendContentsOf([])
+                newplayer.rank_list.appendContentsOf([])
+                
+                try! realm.write {
+                    realm.add(newplayer)
+                }
+                self.players = realm.objects(Player).map { $0 }
+                self.tableView.reloadData()
+            }else{
+//                let alertController = UIAlertController(title: "Alert", message: "The player already exist!! ", preferredStyle: .Alert)
+//                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+//                alertController.addAction(defaultAction)
             }
-            
-            self.players = realm.objects(Player).map { $0 }
-            
-            self.tableView.reloadData()
         }
-        
         alertController.addAction(logintAction)
         
         alertController.addTextFieldWithConfigurationHandler { textField -> Void in
