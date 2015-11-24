@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "BD2F7CAE415D25CA59C4EB8E78D4D289710286D9",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "BD2F7CAE415D25CA59C4EB8E78D4D289710286D9" : 0,
+    "1CA8AD815677B6FB0DD135F65EC4576AE68426CF" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AD946468-07CB-4849-BD74-CE26CFCC2BCE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "BD2F7CAE415D25CA59C4EB8E78D4D289710286D9" : "mahjong_scorere\/",
+    "1CA8AD815677B6FB0DD135F65EC4576AE68426CF" : "BEMSimpleLineGraph\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "mahjong_scorere",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "mahjong_scorere.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:Boris-Em\/BEMSimpleLineGraph.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1CA8AD815677B6FB0DD135F65EC4576AE68426CF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:umoji\/mahjong_scorere.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BD2F7CAE415D25CA59C4EB8E78D4D289710286D9"
+    }
+  ]
+}

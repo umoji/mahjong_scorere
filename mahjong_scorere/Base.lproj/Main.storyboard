@@ -84,8 +84,22 @@
                     <view key="view" contentMode="scaleToFill" id="cwK-3W-eQU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7C-yp-Qs1" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="64" width="414" height="304"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="arY-RN-jIm" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="367" width="414" height="320"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="lineChartView" destination="W7C-yp-Qs1" id="mUc-hs-sGV"/>
+                        <outlet property="pieChartView" destination="arY-RN-jIm" id="VBA-WB-vAp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eYI-zu-HQ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

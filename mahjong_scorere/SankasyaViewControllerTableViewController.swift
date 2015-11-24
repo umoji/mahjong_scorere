@@ -9,10 +9,12 @@
 import UIKit
 import RealmSwift
 import PNChartSwift
+import Charts
 
-class SankasyaViewControllerTableViewController: UITableViewController, PNChartDelegate{
+var playerNumber: Int = 0
+
+class SankasyaViewControllerTableViewController: UITableViewController{
     var players = [Player]()
-    var playerNumber: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,8 @@ class SankasyaViewControllerTableViewController: UITableViewController, PNChartD
         
         // 編集ボタンを左上に配置
         navigationItem.leftBarButtonItem = editButtonItem()
+        print("playerNumber is \(playerNumber)")
+        
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -121,63 +125,65 @@ class SankasyaViewControllerTableViewController: UITableViewController, PNChartD
     override func tableView(table: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         performSegueWithIdentifier("toSubViewController",sender: nil)
         print("selected \(indexPath.row)")
+        playerNumber = indexPath.row
+        print("aaaaaaplayerNumber is \(playerNumber)")
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//    }
+//    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        let viewController:UIViewController = segue.destinationViewController
+//        let ChartLabel:UILabel = UILabel(frame: CGRectMake(0, 90, 320.0, 30))
+//        let player = players[tableView.indexPathForSelectedRow!.row]
+//        //let xarray = (Array<Int>)(1...Int(player.point_list.count))
+//        var xarray = [String]()
+//        var yarray = [CGFloat]()
+//        
+//        for (var i=0;i<player.point_list.count;i++){
+//            xarray.append("\(i+1)")
+//        }
+//        
+//        for (var j=0;j<player.point_list.count;j++){
+//            yarray.append(CGFloat(player.point_list[j].point))
+//        }
+//        
+//        ChartLabel.textColor = PNGreenColor
+//        ChartLabel.font = UIFont(name: "Avenir-Medium", size:23.0)
+//        ChartLabel.textAlignment = NSTextAlignment.Center
+//        //Add LineChart
+//        ChartLabel.text = "\(players[tableView.indexPathForSelectedRow!.row].name)"
+//        
+//        let lineChart:PNLineChart = PNLineChart(frame: CGRectMake(0, 135.0, 320, 200.0))
+////        lineChart.yLabelFormat = "%f"
+//        lineChart.showLabel = true
+//        lineChart.backgroundColor = UIColor.clearColor()
+//        lineChart.xLabels = xarray
+//        lineChart.showCoordinateAxis = true
+//        lineChart.delegate = self
+//        
+//        // Line Chart Nr.1
+//        let data01Array: [CGFloat] = yarray
+//        let data01:PNLineChartData = PNLineChartData()
+//        data01.color = PNGreenColor
+//        data01.itemCount = data01Array.count
+//        data01.inflexionPointStyle = PNLineChartData.PNLineChartPointStyle.PNLineChartPointStyleCycle
+//        data01.getData = ({(index: Int) -> PNLineChartDataItem in
+//            let yValue:CGFloat = data01Array[index]
+//            let item = PNLineChartDataItem(y: yValue)
+//            return item
+//        })
+//        
+//        lineChart.chartData = [data01]
+//        lineChart.strokeChart()
+//        
+//        //lineChart.delegate = self
+//        
+//        viewController.view.addSubview(lineChart)
+//        viewController.view.addSubview(ChartLabel)
+//        viewController.title = "Line Chart"
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let viewController:UIViewController = segue.destinationViewController
-        let ChartLabel:UILabel = UILabel(frame: CGRectMake(0, 90, 320.0, 30))
-        let player = players[tableView.indexPathForSelectedRow!.row]
-        //let xarray = (Array<Int>)(1...Int(player.point_list.count))
-        var xarray = [String]()
-        var yarray = [CGFloat]()
-        
-        for (var i=0;i<player.point_list.count;i++){
-            xarray.append("\(i+1)")
-        }
-        
-        for (var j=0;j<player.point_list.count;j++){
-            yarray.append(CGFloat(player.point_list[j].point))
-        }
-        
-        ChartLabel.textColor = PNGreenColor
-        ChartLabel.font = UIFont(name: "Avenir-Medium", size:23.0)
-        ChartLabel.textAlignment = NSTextAlignment.Center
-        //Add LineChart
-        ChartLabel.text = "\(players[tableView.indexPathForSelectedRow!.row].name)"
-        
-        let lineChart:PNLineChart = PNLineChart(frame: CGRectMake(0, 135.0, 320, 200.0))
-//        lineChart.yLabelFormat = "%f"
-        lineChart.showLabel = true
-        lineChart.backgroundColor = UIColor.clearColor()
-        lineChart.xLabels = xarray
-        lineChart.showCoordinateAxis = true
-        lineChart.delegate = self
-        
-        // Line Chart Nr.1
-        let data01Array: [CGFloat] = yarray
-        let data01:PNLineChartData = PNLineChartData()
-        data01.color = PNGreenColor
-        data01.itemCount = data01Array.count
-        data01.inflexionPointStyle = PNLineChartData.PNLineChartPointStyle.PNLineChartPointStyleCycle
-        data01.getData = ({(index: Int) -> PNLineChartDataItem in
-            let yValue:CGFloat = data01Array[index]
-            let item = PNLineChartDataItem(y: yValue)
-            return item
-        })
-        
-        lineChart.chartData = [data01]
-        lineChart.strokeChart()
-        
-        //lineChart.delegate = self
-        
-        viewController.view.addSubview(lineChart)
-        viewController.view.addSubview(ChartLabel)
-        viewController.title = "Line Chart"
-        
 //        case "barChart":
 //            //Add BarChart
 //            ChartLabel.text = "Bar Chart"
@@ -211,22 +217,22 @@ class SankasyaViewControllerTableViewController: UITableViewController, PNChartD
 //            print("Hello Chart")
 //        }
         
-    }
-    
-    func userClickedOnLineKeyPoint(point: CGPoint, lineIndex: Int, keyPointIndex: Int)
-    {
-        print("Click Key on line \(point.x), \(point.y) line index is \(lineIndex) and point index is \(keyPointIndex)")
-    }
-    
-    func userClickedOnLinePoint(point: CGPoint, lineIndex: Int)
-    {
-        print("Click Key on line \(point.x), \(point.y) line index is \(lineIndex)")
-    }
-    
-    func userClickedOnBarChartIndex(barIndex: Int)
-    {
-        print("Click  on bar \(barIndex)")
-    }
+//    }
+//    
+//    func userClickedOnLineKeyPoint(point: CGPoint, lineIndex: Int, keyPointIndex: Int)
+//    {
+//        print("Click Key on line \(point.x), \(point.y) line index is \(lineIndex) and point index is \(keyPointIndex)")
+//    }
+//    
+//    func userClickedOnLinePoint(point: CGPoint, lineIndex: Int)
+//    {
+//        print("Click Key on line \(point.x), \(point.y) line index is \(lineIndex)")
+//    }
+//    
+//    func userClickedOnBarChartIndex(barIndex: Int)
+//    {
+//        print("Click  on bar \(barIndex)")
+//    }
     
     @IBAction func inputFieldBtn(sender: UIButton) {
         var inputTextField: UITextField?
