@@ -205,7 +205,7 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
-        }else if(doublerate == 0){
+        }else if doublerate == 0 {
             let alertController = UIAlertController(title: "Alert", message: "Rate is not filled!! ", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)

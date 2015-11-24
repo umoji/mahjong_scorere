@@ -12,23 +12,24 @@ import Charts
 
 class DetailViewController: UIViewController {
     var players = [Player]()
-    @IBOutlet var detailDescriptionLabel: UILabel?
+//    @IBOutlet var detailDescriptionLabel: UILabel?
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var pieChartView: PieChartView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print("playerNumber is \(playerNumber)")
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
         let player = players[playerNumber]
-//        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
-//        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0]
+        lineChartView.descriptionText = ""
+        pieChartView.descriptionText = ""
+        lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         
         var xarrayline = [String]()
         var yarrayline = [Double]()
         var yarraylinesum = [Double]()
-        let xarraypie = ["1","2","3","4"]
+        let xarraypie = ["1位","2位","3位","4位"]
         var yarraypie = [0.0,0.0,0.0,0.0]
         
         for (var i=0;i<player.point_list.count;i++){
@@ -58,7 +59,7 @@ class DetailViewController: UIViewController {
                 yarraypie[3] += 1.0
             }
         }
-        
+        yarraypie = yarraypie.map{ $0 / Double(player.rank_list.count) * 100}
         
         setChartLine(xarrayline, values: yarraylinesum)
         setChartPie(xarraypie, values: yarraypie)
@@ -89,7 +90,7 @@ class DetailViewController: UIViewController {
         
         pieChartDataSet.colors = colors
         
-        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "\(players[playerNumber].name)")
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         lineChartView.data = lineChartData
     }
@@ -102,7 +103,7 @@ class DetailViewController: UIViewController {
             dataEntries.append(dataEntry)
         }
         
-        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: "Units Sold")
+        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: "\(players[playerNumber].name)")
         let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
         pieChartView.data = pieChartData
         
