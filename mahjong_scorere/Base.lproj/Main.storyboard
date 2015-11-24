@@ -65,10 +65,31 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <segue destination="bR0-b2-tL7" kind="show" identifier="toSubViewController" id="la2-Au-xYh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QCR-TE-fAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1384" y="376"/>
+            <point key="canvasLocation" x="1446" y="376"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="gPw-jD-akT">
+            <objects>
+                <viewController id="bR0-b2-tL7" customClass="DetailViewController" customModule="mahjong_scorere" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2Cu-Qg-UMB"/>
+                        <viewControllerLayoutGuide type="bottom" id="FZS-DH-XcY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cwK-3W-eQU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eYI-zu-HQ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2054" y="376"/>
         </scene>
         <!--参加者-->
         <scene sceneID="woe-8s-O88">

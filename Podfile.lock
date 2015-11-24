@@ -1,4 +1,5 @@
 PODS:
+  - PNChartSwift (0.0.2)
   - Realm (0.96.2):
     - Realm/Headers (= 0.96.2)
   - Realm/Headers (0.96.2)
@@ -6,10 +7,13 @@ PODS:
     - Realm (= 0.96.2)
 
 DEPENDENCIES:
+  - PNChartSwift (from `https://github.com/kevinzhow/PNChart-Swift.git`)
   - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `swift-2.0`)
   - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `swift-2.0`)
 
 EXTERNAL SOURCES:
+  PNChartSwift:
+    :git: https://github.com/kevinzhow/PNChart-Swift.git
   Realm:
     :branch: swift-2.0
     :git: https://github.com/realm/realm-cocoa.git
@@ -18,6 +22,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/realm/realm-cocoa.git
 
 CHECKOUT OPTIONS:
+  PNChartSwift:
+    :commit: 88eb8bcb4cd415d02775b2d355542b8bd338712d
+    :git: https://github.com/kevinzhow/PNChart-Swift.git
   Realm:
     :commit: a4e4fbb8dc285ea7c2a794f00ef7f2fb4996ec95
     :git: https://github.com/realm/realm-cocoa.git
@@ -26,6 +33,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/realm/realm-cocoa.git
 
 SPEC CHECKSUMS:
+  PNChartSwift: bcdfbffd65920072463eff42d0dfb46189bf4495
   Realm: 962a3daeb000dfd379e0a9ccb2a752a352a88205
   RealmSwift: 485599fe54e35461c4a0daa7d01d8fbf11424873
 

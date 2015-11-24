@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '75E8CFFB9725BEEB66F14F1D'
-               BlueprintName = 'Pods-mahjong_scorereTests'
+               BlueprintIdentifier = 'FC400C45EEF6AD1AD5EEB758'
+               BlueprintName = 'PNChartSwift'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods_mahjong_scorereTests.framework'>
+               BuildableName = 'PNChartSwift.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

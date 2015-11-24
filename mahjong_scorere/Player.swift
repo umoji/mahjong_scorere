@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import PNChartSwift
 
 // Pointsクラス
 class Points: Object {

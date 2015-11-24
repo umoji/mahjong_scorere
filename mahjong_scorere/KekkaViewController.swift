@@ -226,32 +226,7 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
         }
-//        let reload_player1 = Player()
 
-//        reload_player1.name = self.players[self.player1number].name
-//        reload_player1.id = self.players[self.player1number].id
-//        reload_player1.money = self.players[self.player1number].money + Int(result1*100.0)
-//        reload_player1.point_list = self.players[self.player1number].point_list
-//        reload_player1.rank_list = self.players[self.player1number].rank_list
-//        let reload_player2 = Player()
-//        reload_player2.name = self.players[self.player2number].name
-//        reload_player2.id = self.players[self.player2number].id
-//        reload_player2.money = self.players[self.player2number].money + Int(result2*100.0)
-//        let reload_player3 = Player()
-//        reload_player3.name = self.players[self.player3number].name
-//        reload_player3.id = self.players[self.player3number].id
-//        reload_player3.money = self.players[self.player3number].money + Int(result3*100.0)
-//        let reload_player4 = Player()
-//        reload_player4.name = self.players[self.player4number].name
-//        reload_player4.id = self.players[self.player4number].id
-//        reload_player4.money = self.players[self.player4number].money + Int(result4*100.0)
-//        let realm = try! Realm()
-//        try! realm.write {
-//            realm.add(reload_player1, update: true)
-//            realm.add(reload_player2, update: true)
-//            realm.add(reload_player3, update: true)
-//            realm.add(reload_player4, update: true)
-//        }
         let tensu1 = Points()
         let tensu2 = Points()
         let tensu3 = Points()
@@ -284,5 +259,6 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.players[self.player4number].rank_list.append(juni4)
         }
     }
-    
 }
+    
+

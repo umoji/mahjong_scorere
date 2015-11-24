@@ -84,10 +84,12 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-mahjong_scorere/PNChartSwift.framework"
   install_framework "Pods-mahjong_scorere/Realm.framework"
   install_framework "Pods-mahjong_scorere/RealmSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-mahjong_scorere/PNChartSwift.framework"
   install_framework "Pods-mahjong_scorere/Realm.framework"
   install_framework "Pods-mahjong_scorere/RealmSwift.framework"
 fi

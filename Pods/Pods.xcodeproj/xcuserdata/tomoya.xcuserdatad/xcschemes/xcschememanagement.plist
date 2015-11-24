@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>PNChartSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-mahjong_scorere.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>79FA92281519ADFD631D78C000CE5EB8</key>
+		<key>06CECC2A34036F4299B3BAF891089B4A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8B073427FEF440585251C42C39D12DDC</key>
+		<key>19518540AF8A093AD7CFF91D33C49F13</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>96ACFDDD73AAB5C06C6EACDAF9776BA0</key>
+		<key>6FF2742C9AD186F4E8FB6EE29F8EE088</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9DA5FA348F31608079AF32301EF12838</key>
+		<key>97C53EBEDD46899826CD31484B00D4FA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BC2F1A5DA8C3C38384EDD6A9144BA96E</key>
+		<key>CD27566C0E05A76BD2C36C634FDE2C35</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E0AA2F9C0A63A9D5792F85F58C773969</key>
 		<dict>
 			<key>primary</key>
 			<true/>
