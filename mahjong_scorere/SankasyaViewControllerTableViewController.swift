@@ -26,9 +26,7 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         print(players)
         
         // 編集ボタンを左上に配置
-        navigationItem.leftBarButtonItem = editButtonItem()
-        print("playerNumber is \(playerNumber)")
-        
+        navigationItem.leftBarButtonItem = editButtonItem()        
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -124,9 +122,7 @@ class SankasyaViewControllerTableViewController: UITableViewController{
 
     override func tableView(table: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         performSegueWithIdentifier("toSubViewController",sender: nil)
-        print("selected \(indexPath.row)")
         playerNumber = indexPath.row
-        print("aaaaaaplayerNumber is \(playerNumber)")
     }
     
 //    override func awakeFromNib() {

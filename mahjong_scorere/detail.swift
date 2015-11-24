@@ -25,23 +25,46 @@ class DetailViewController: UIViewController {
 //        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
 //        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0]
         
-        var xarray = [String]()
-        var yarray = [Double]()
+        var xarrayline = [String]()
+        var yarrayline = [Double]()
+        var yarraylinesum = [Double]()
+        let xarraypie = ["1","2","3","4"]
+        var yarraypie = [0.0,0.0,0.0,0.0]
         
         for (var i=0;i<player.point_list.count;i++){
-            xarray.append("\(i+1)")
+            xarrayline.append("\(i+1)")
         }
         
-        for (var j=0;j<player.point_list.count;j++){
-            yarray.append(Double(player.point_list[j].point))
+        for (var i=0;i<player.point_list.count;i++){
+            yarrayline.append(Double(player.point_list[i].point))
+        }
+        var sum:Double = 0.0
+        for (var i=0;i<yarrayline.count;i++){
+            for (var j=0;j<=i;j++){
+                sum += yarrayline[j]
+            }
+            yarraylinesum.append(sum)
+            sum = 0.0
         }
         
-        setChart(xarray, values: yarray)
+        for (var i=0;i<player.rank_list.count;i++){
+            if player.rank_list[i].rank == 1 {
+                yarraypie[0] += 1.0
+            }else if player.rank_list[i].rank == 2 {
+                yarraypie[1] += 1.0
+            }else if player.rank_list[i].rank == 3 {
+                yarraypie[2] += 1.0
+            }else{
+                yarraypie[3] += 1.0
+            }
+        }
         
-        // Do any additional setup after loading the view.
+        
+        setChartLine(xarrayline, values: yarraylinesum)
+        setChartPie(xarraypie, values: yarraypie)
     }
     
-    func setChart(dataPoints: [String], values: [Double]) {
+    func setChartLine(dataPoints: [String], values: [Double]) {
         var dataEntries: [ChartDataEntry] = []
         
         for i in 0..<dataPoints.count {
@@ -55,7 +78,7 @@ class DetailViewController: UIViewController {
 
         var colors: [UIColor] = []
         
-        for i in 0..<dataPoints.count {
+        for _ in 0..<dataPoints.count {
             let red = Double(arc4random_uniform(256))
             let green = Double(arc4random_uniform(256))
             let blue = Double(arc4random_uniform(256))
@@ -69,7 +92,32 @@ class DetailViewController: UIViewController {
         let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         lineChartView.data = lineChartData
+    }
+    
+    func setChartPie(dataPoints: [String], values: [Double]) {
+        var dataEntries: [ChartDataEntry] = []
         
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+            dataEntries.append(dataEntry)
+        }
+        
+        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: "Units Sold")
+        let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
+        pieChartView.data = pieChartData
+        
+        var colors: [UIColor] = []
+        
+        for _ in 0..<dataPoints.count {
+            let red = Double(arc4random_uniform(256))
+            let green = Double(arc4random_uniform(256))
+            let blue = Double(arc4random_uniform(256))
+            
+            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+            colors.append(color)
+        }
+        
+        pieChartDataSet.colors = colors
     }
     
     override func didReceiveMemoryWarning() {
