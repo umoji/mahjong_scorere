@@ -48,6 +48,10 @@ class SiharaiViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         self.navigationItem.title = "支払";
         super.viewDidLoad()
+        paybtn.layer.masksToBounds = true
+        paybtn.layer.cornerRadius = 10
+        paybtn.backgroundColor = UIColor.whiteColor()
+        paybtn.layer.borderWidth = 1
         let realm = try! Realm()
         players = realm.objects(Player).map{$0}
         

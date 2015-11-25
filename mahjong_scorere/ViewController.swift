@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
+import Parse
 
 class ViewController: UIViewController {
+    var players = [Player]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
 
 }

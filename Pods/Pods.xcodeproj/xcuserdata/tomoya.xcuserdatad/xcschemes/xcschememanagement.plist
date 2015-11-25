@@ -4,12 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Charts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>PNChartSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,22 +52,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>015AB71A81C763A4E3EC2E9E04132D54</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>16FDABF7E9E6B32B383E8BA463BE3C79</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>22D8F4D5D413B1EE02055C6CFD9286C1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>24090FBCEF7A50AE384678B5C071804B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3DD1EC156967DFE6611C50A46C255979</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4C6709063588B906BFBBAD9E9D28E06E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4E4D03EA1EFA7A8F2971F0EEE31B07AF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>511B536F0DE06D9C3BD65397A91990C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6B020BBA8D1F6B40876E60208DEE2A41</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,12 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C193FB448AD739F384461F680F3FB505</key>
+		<key>708E01B006A9F88B3C13711562282B5E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EA20EE726DC1C8D6A8E5747471E075B6</key>
+		<key>C9C86C2EB87AE6F1F4B17F352B6B0F52</key>
 		<dict>
 			<key>primary</key>
 			<true/>

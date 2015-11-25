@@ -78,32 +78,59 @@
             <objects>
                 <viewController id="bR0-b2-tL7" customClass="DetailViewController" customModule="mahjong_scorere" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2Cu-Qg-UMB"/>
-                        <viewControllerLayoutGuide type="bottom" id="FZS-DH-XcY"/>
+                        <viewControllerLayoutGuide type="top" id="CFd-dX-zq9"/>
+                        <viewControllerLayoutGuide type="bottom" id="ohM-Bi-v9m"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cwK-3W-eQU">
+                    <view key="view" contentMode="scaleToFill" id="SKh-jp-Rpy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7C-yp-Qs1" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="64" width="414" height="304"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HPI-1t-StB" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="405" width="414" height="282"/>
+                                <color key="backgroundColor" red="1" green="0.96465369040000004" blue="0.19276320290000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="arY-RN-jIm" customClass="PieChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="367" width="414" height="320"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JiI-WH-JFN" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="138" width="414" height="268"/>
+                                <color key="backgroundColor" red="1" green="0.96465369040000004" blue="0.19276320290000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F7I-DE-ayl">
+                                <rect key="frame" x="31" y="87" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6L2-Ae-lgR">
+                                <rect key="frame" x="175" y="87" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jyk-2D-Y8I">
+                                <rect key="frame" x="316" y="86" width="70" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Update"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="resultButton:" destination="bR0-b2-tL7" eventType="touchUpInside" id="n2J-4s-PRs"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.96465369040000004" blue="0.19276320290000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
-                        <outlet property="lineChartView" destination="W7C-yp-Qs1" id="mUc-hs-sGV"/>
-                        <outlet property="pieChartView" destination="arY-RN-jIm" id="VBA-WB-vAp"/>
+                        <outlet property="lineChartView" destination="HPI-1t-StB" id="oUJ-qo-HVV"/>
+                        <outlet property="pieChartView" destination="JiI-WH-JFN" id="CaK-Vp-en3"/>
+                        <outlet property="playermoney" destination="6L2-Ae-lgR" id="xvr-bv-6hj"/>
+                        <outlet property="playername" destination="F7I-DE-ayl" id="NVs-4W-uL5"/>
+                        <outlet property="updatebtn" destination="Jyk-2D-Y8I" id="00P-7P-ERL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eYI-zu-HQ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2054" y="376"/>
+            <point key="canvasLocation" x="2072" y="376"/>
         </scene>
         <!--参加者-->
         <scene sceneID="woe-8s-O88">
@@ -310,6 +337,7 @@
                         <outlet property="point3" destination="60o-wF-cb7" id="Rzn-FH-4UE"/>
                         <outlet property="point4" destination="XOW-Cx-Kgg" id="sGw-Dj-d6C"/>
                         <outlet property="rate" destination="Md0-1R-GIB" id="nsD-9J-ijJ"/>
+                        <outlet property="resultbtn" destination="dmA-gN-q6x" id="bPX-4l-lYN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ob-ck-LtG" userLabel="First Responder" sceneMemberID="firstResponder"/>

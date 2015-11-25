@@ -10,27 +10,38 @@ import UIKit
 import RealmSwift
 import Charts
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController{
     var players = [Player]()
-//    @IBOutlet var detailDescriptionLabel: UILabel?
+    private var doneToolbar: UIToolbar!
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var pieChartView: PieChartView!
+    @IBOutlet weak var playername: UITextField!
+    @IBOutlet weak var playermoney: UITextField!
+    @IBOutlet weak var updatebtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
         let player = players[playerNumber]
+        playername.placeholder = "\(players[playerNumber].name)"
+        playermoney.placeholder = "\(players[playerNumber].money)"
+        playername.keyboardType = UIKeyboardType.NumbersAndPunctuation
+        playermoney.keyboardType = UIKeyboardType.NumbersAndPunctuation
+        updatebtn.layer.masksToBounds = true
+        updatebtn.layer.cornerRadius = 10
+        updatebtn.backgroundColor = UIColor.whiteColor()
+        updatebtn.layer.borderWidth = 1
         lineChartView.descriptionText = ""
         pieChartView.descriptionText = ""
         lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-        pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+//        pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         
         var xarrayline = [String]()
         var yarrayline = [Double]()
         var yarraylinesum = [Double]()
-        let xarraypie = ["1位","2位","3位","4位"]
-        var yarraypie = [0.0,0.0,0.0,0.0]
+        let xarraypie = ["1位", "2位", "3位", "4位"]
+        var yarraypie = [0.0, 0.0, 0.0, 0.0]
         
         for (var i=0;i<player.point_list.count;i++){
             xarrayline.append("\(i+1)")
@@ -61,64 +72,78 @@ class DetailViewController: UIViewController {
         }
         yarraypie = yarraypie.map{ $0 / Double(player.rank_list.count) * 100}
         
-        setChartLine(xarrayline, values: yarraylinesum)
         setChartPie(xarraypie, values: yarraypie)
+        setChartLine(xarrayline, values: yarraylinesum)
     }
     
-    func setChartLine(dataPoints: [String], values: [Double]) {
-        var dataEntries: [ChartDataEntry] = []
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        doneToolbar.barStyle = UIBarStyle.BlackTranslucent
         
-        for i in 0..<dataPoints.count {
-            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
-            dataEntries.append(dataEntry)
-        }
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: Selector("doneButtonAction"))
         
-        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: "Units Sold")
-        let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
-        pieChartView.data = pieChartData
+        var items: [UIBarButtonItem]? = [UIBarButtonItem]()
+        items?.append(flexSpace)
+        items?.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        playername.inputAccessoryView = doneToolbar
+        playermoney.inputAccessoryView = doneToolbar
+    }
+    
+    func doneButtonAction()
+    {
+        playername.resignFirstResponder()
+        playermoney.resignFirstResponder()
+    }
 
-        var colors: [UIColor] = []
-        
-        for _ in 0..<dataPoints.count {
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
+    
+    func setChartLine(dataPoints: [String], values: [Double]) {
+        var dataEntriesline: [ChartDataEntry] = []
+        for i in 0..<dataPoints.count {
+            let dataEntryline = ChartDataEntry(value: values[i], xIndex: i)
+            dataEntriesline.append(dataEntryline)
         }
-        
-        pieChartDataSet.colors = colors
-        
-        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "\(players[playerNumber].name)")
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntriesline, label: "\(players[playerNumber].name)")
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         lineChartView.data = lineChartData
     }
     
     func setChartPie(dataPoints: [String], values: [Double]) {
-        var dataEntries: [ChartDataEntry] = []
+        var dataEntriespie: [ChartDataEntry] = []
         
         for i in 0..<dataPoints.count {
-            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
-            dataEntries.append(dataEntry)
+            let dataEntrypie = ChartDataEntry(value: values[i], xIndex: i)
+            dataEntriespie.append(dataEntrypie)
         }
         
-        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: "\(players[playerNumber].name)")
+        let pieChartDataSet = PieChartDataSet(yVals: dataEntriespie, label: "")
         let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
         pieChartView.data = pieChartData
         
         var colors: [UIColor] = []
-        
-        for _ in 0..<dataPoints.count {
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
+        for i in 0..<dataPoints.count {
+            if i == 0{
+                let color = UIColor.redColor()
+                colors.append(color)
+            }else if i == 1{
+                let color = UIColor.orangeColor()
+                colors.append(color)
+            }else if i == 2{
+                let color = UIColor.blueColor()
+                colors.append(color)
+            }else{
+                let color = UIColor.lightGrayColor()
+                colors.append(color)
+            }
         }
         
         pieChartDataSet.colors = colors
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -142,6 +167,45 @@ class DetailViewController: UIViewController {
             }
         }
         return nil
+    }
+    @IBAction func resultButton(sender: UIButton){
+        let realm = try! Realm()
+        //players = realm.objects(Player).map{$0}
+        if playername.text != "" && playermoney.text != ""{
+            print("changed name and money")
+            try! realm.write{
+                self.players[playerNumber].name = self.playername.text!
+                self.players[playerNumber].money = Int(self.playermoney.text!)!
+            }
+            let alertController = UIAlertController(title: "Changed Name and Money!!", message: "Changed Name and Money to '\(self.players[playerNumber].name)' '\(self.players[playerNumber].money)'", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }else if playername.text != "" && playermoney.text == ""{
+            print("changed name")
+            try! realm.write{
+                self.players[playerNumber].name = self.playername.text!
+            }
+            let alertController = UIAlertController(title: "Changed Name!!", message: "Changed Name to '\(self.players[playerNumber].name)'", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }else if playername.text == "" && playermoney.text != ""{
+            print("changed money")
+            try! realm.write{
+                self.players[playerNumber].money = Int(self.playermoney.text!)!
+            }
+            let alertController = UIAlertController(title: "Changed Money!!", message: "Changed Money to '¥\(self.players[playerNumber].money)'", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }else{
+//            let alertController = UIAlertController(title: "Nothing Changed!!", message: "Nothing Changed", preferredStyle: .Alert)
+//            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+//            alertController.addAction(defaultAction)
+//            presentViewController(alertController, animated: true, completion: nil)
+        }
+        players = realm.objects(Player).map{$0}
     }
     
 }

@@ -31,6 +31,7 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var player2btn: UIButton!
     @IBOutlet weak var player3btn: UIButton!
     @IBOutlet weak var player4btn: UIButton!
+    @IBOutlet weak var resultbtn: UIButton!
 
     @IBAction func player1btnAction(sender: AnyObject) {
         player1Table.hidden = !player1Table.hidden
@@ -51,6 +52,10 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         self.navigationItem.title = "結果";
         super.viewDidLoad()
+        resultbtn.layer.masksToBounds = true
+        resultbtn.layer.cornerRadius = 10
+        resultbtn.backgroundColor = UIColor.whiteColor()
+        resultbtn.layer.borderWidth = 1
         let realm = try! Realm()
         players = realm.objects(Player).map{$0}
         //PlayerTableView

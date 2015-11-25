@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import PNChartSwift
 import Charts
+import Parse
 
 var playerNumber: Int = 0
 
@@ -23,10 +24,57 @@ class SankasyaViewControllerTableViewController: UITableViewController{
 
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
-        print(players)
+        
+//        for (var i=0; i<players.count; i++){
+//            var rank_array:[Int] = []
+//            var point_array:[Int] = []
+//            let realmObject = PFObject(className: "realms")
+//            realmObject["id"] = players[i].id
+//            realmObject["name"] = players[i].name
+//            realmObject["money"] = players[i].money
+//            for (var j=0; j<players[i].rank_list.count; j++){
+//                rank_array.append(players[i].rank_list[j].rank)
+//            }
+//            realmObject["rank_list"] = rank_array
+//            for (var k=0; k<players[i].rank_list.count; k++){
+//                point_array.append(players[i].point_list[k].point)
+//            }
+//            realmObject["point_list"] = point_array
+//            realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
+//                if success {
+//                    print("Data has been saved")
+//                }
+//            }
+//        }
         
         // 編集ボタンを左上に配置
         navigationItem.leftBarButtonItem = editButtonItem()        
+    }
+    
+//    func saverealm(){
+//        let realm = try! Realm()
+//        players = realm.objects(Player).map { $0 }
+//        let realmObject = PFObject(className: "realms")
+//        realmObject["players"] = players
+//        //        realmObject["text"] = text
+//        realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
+//            if success {
+//                print("Data has been saved")
+//            }
+//        }
+//    }
+    
+    func loadData(){
+        let query:PFQuery = PFQuery(className: "realms")
+        query.orderByAscending("createdAt")
+        query.findObjectsInBackgroundWithBlock{(objects: [PFObject]?, error: NSError?) -> Void in
+            if (error != nil){
+            }
+            print(objects)
+            //                for object in objects! {
+            //                    print(object["name"] as! String)
+            //                }
+        }
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -118,118 +166,11 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             return cell
         }
     }
-    
 
     override func tableView(table: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         performSegueWithIdentifier("toSubViewController",sender: nil)
         playerNumber = indexPath.row
     }
-    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//    }
-//    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        let viewController:UIViewController = segue.destinationViewController
-//        let ChartLabel:UILabel = UILabel(frame: CGRectMake(0, 90, 320.0, 30))
-//        let player = players[tableView.indexPathForSelectedRow!.row]
-//        //let xarray = (Array<Int>)(1...Int(player.point_list.count))
-//        var xarray = [String]()
-//        var yarray = [CGFloat]()
-//        
-//        for (var i=0;i<player.point_list.count;i++){
-//            xarray.append("\(i+1)")
-//        }
-//        
-//        for (var j=0;j<player.point_list.count;j++){
-//            yarray.append(CGFloat(player.point_list[j].point))
-//        }
-//        
-//        ChartLabel.textColor = PNGreenColor
-//        ChartLabel.font = UIFont(name: "Avenir-Medium", size:23.0)
-//        ChartLabel.textAlignment = NSTextAlignment.Center
-//        //Add LineChart
-//        ChartLabel.text = "\(players[tableView.indexPathForSelectedRow!.row].name)"
-//        
-//        let lineChart:PNLineChart = PNLineChart(frame: CGRectMake(0, 135.0, 320, 200.0))
-////        lineChart.yLabelFormat = "%f"
-//        lineChart.showLabel = true
-//        lineChart.backgroundColor = UIColor.clearColor()
-//        lineChart.xLabels = xarray
-//        lineChart.showCoordinateAxis = true
-//        lineChart.delegate = self
-//        
-//        // Line Chart Nr.1
-//        let data01Array: [CGFloat] = yarray
-//        let data01:PNLineChartData = PNLineChartData()
-//        data01.color = PNGreenColor
-//        data01.itemCount = data01Array.count
-//        data01.inflexionPointStyle = PNLineChartData.PNLineChartPointStyle.PNLineChartPointStyleCycle
-//        data01.getData = ({(index: Int) -> PNLineChartDataItem in
-//            let yValue:CGFloat = data01Array[index]
-//            let item = PNLineChartDataItem(y: yValue)
-//            return item
-//        })
-//        
-//        lineChart.chartData = [data01]
-//        lineChart.strokeChart()
-//        
-//        //lineChart.delegate = self
-//        
-//        viewController.view.addSubview(lineChart)
-//        viewController.view.addSubview(ChartLabel)
-//        viewController.title = "Line Chart"
-    
-//        case "barChart":
-//            //Add BarChart
-//            ChartLabel.text = "Bar Chart"
-//            
-//            var barChart = PNBarChart(frame: CGRectMake(0, 135.0, 320.0, 200.0))
-//            barChart.backgroundColor = UIColor.clearColor()
-//            //            barChart.yLabelFormatter = ({(yValue: CGFloat) -> NSString in
-//            //                var yValueParsed:CGFloat = yValue
-//            //                var labelText:NSString = NSString(format:"%1.f",yValueParsed)
-//            //                return labelText;
-//            //            })
-//            
-//            
-//            // remove for default animation (all bars animate at once)
-//            barChart.animationType = .Waterfall
-//            
-//            
-//            barChart.labelMarginTop = 5.0
-//            barChart.xLabels = ["SEP 1","SEP 2","SEP 3","SEP 4","SEP 5","SEP 6","SEP 7"]
-//            barChart.yValues = [1,24,12,18,30,10,21]
-//            barChart.strokeChart()
-//            
-//            barChart.delegate = self
-//            
-//            viewController.view.addSubview(ChartLabel)
-//            viewController.view.addSubview(barChart)
-//            
-//            viewController.title = "Bar Chart"
-//            
-//        default:
-//            print("Hello Chart")
-//        }
-        
-//    }
-//    
-//    func userClickedOnLineKeyPoint(point: CGPoint, lineIndex: Int, keyPointIndex: Int)
-//    {
-//        print("Click Key on line \(point.x), \(point.y) line index is \(lineIndex) and point index is \(keyPointIndex)")
-//    }
-//    
-//    func userClickedOnLinePoint(point: CGPoint, lineIndex: Int)
-//    {
-//        print("Click Key on line \(point.x), \(point.y) line index is \(lineIndex)")
-//    }
-//    
-//    func userClickedOnBarChartIndex(barIndex: Int)
-//    {
-//        print("Click  on bar \(barIndex)")
-//    }
-    
     @IBAction func inputFieldBtn(sender: UIButton) {
         var inputTextField: UITextField?
         var exist = false

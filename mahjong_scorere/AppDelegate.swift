@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import RealmSwift
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        //Parse.enableLocalDatastore()
+        
+        Parse.setApplicationId("P98USbXMJGhxHe25LZvKMZQu8i7TzCrBLQ2TmfwQ",
+            clientKey: "trF0gL1FWsVIHI7CH0XR8ftg4C2Bco61FJKIMkzp")
         
         let config = Realm.Configuration(
             // 新しいスキーマバージョンを設定します。以前のバージョンより大きくなければなりません。
