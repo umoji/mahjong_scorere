@@ -21,49 +21,41 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         super.viewDidLoad()
         self.tableView.rowHeight = 90.0;
         self.navigationItem.title = "参加者"
-
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
-        
-//        for (var i=0; i<players.count; i++){
-//            var rank_array:[Int] = []
-//            var point_array:[Int] = []
-//            let realmObject = PFObject(className: "realms")
-//            realmObject["id"] = players[i].id
-//            realmObject["name"] = players[i].name
-//            realmObject["money"] = players[i].money
-//            for (var j=0; j<players[i].rank_list.count; j++){
-//                rank_array.append(players[i].rank_list[j].rank)
-//            }
-//            realmObject["rank_list"] = rank_array
-//            for (var k=0; k<players[i].rank_list.count; k++){
-//                point_array.append(players[i].point_list[k].point)
-//            }
-//            realmObject["point_list"] = point_array
-//            realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
-//                if success {
-//                    print("Data has been saved")
-//                }
-//            }
-//        }
+        save_players()
+        fetch_player("shiina")
         
         // 編集ボタンを左上に配置
         navigationItem.leftBarButtonItem = editButtonItem()        
     }
     
-//    func saverealm(){
-//        let realm = try! Realm()
-//        players = realm.objects(Player).map { $0 }
-//        let realmObject = PFObject(className: "realms")
-//        realmObject["players"] = players
-//        //        realmObject["text"] = text
-//        realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
-//            if success {
-//                print("Data has been saved")
-//            }
-//        }
-//    }
-    
+    func save_players(){
+        let realm = try! Realm()
+        players = realm.objects(Player).map { $0 }
+        for (var i=0; i<players.count; i++){
+            var rank_array:[Int] = []
+            var point_array:[Int] = []
+            let realmObject = PFObject(className: "realms")
+            realmObject["id"] = players[i].id
+            realmObject["name"] = players[i].name
+            realmObject["money"] = players[i].money
+            for (var j=0; j<players[i].rank_list.count; j++){
+                rank_array.append(players[i].rank_list[j].rank)
+            }
+            realmObject["rank_list"] = rank_array
+            for (var k=0; k<players[i].rank_list.count; k++){
+                point_array.append(players[i].point_list[k].point)
+            }
+            realmObject["point_list"] = point_array
+            realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
+                if success {
+                    print("Data has been saved")
+                }
+            }
+        }
+    }
+
     func loadData(){
         let query:PFQuery = PFQuery(className: "realms")
         query.orderByAscending("createdAt")
@@ -71,9 +63,25 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             if (error != nil){
             }
             print(objects)
-            //                for object in objects! {
-            //                    print(object["name"] as! String)
-            //                }
+//            for object in objects! {
+//                print(object["name"] as! String)
+//            }
+        }
+    }
+    
+    func fetch_player(name: String){
+        let query: PFQuery = PFQuery(className: "realms")
+        query.whereKey("name", containsString: "\(name)")
+        query.orderByAscending("createdAt")
+        
+        // バックグラウンドでデータを取得
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            for object in objects! {
+                
+                if(error == nil){
+                    print(object)
+                }
+            }
         }
     }
     
