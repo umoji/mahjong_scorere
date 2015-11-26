@@ -23,8 +23,11 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         self.navigationItem.title = "参加者"
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
+
         save_players()
-        fetch_player("shiina")
+//        print(players)
+//        fetch_player(1)
+        
         
         // 編集ボタンを左上に配置
         navigationItem.leftBarButtonItem = editButtonItem()        
@@ -37,7 +40,9 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             var rank_array:[Int] = []
             var point_array:[Int] = []
             let realmObject = PFObject(className: "realms")
-            realmObject["id"] = players[i].id
+            //realmObject["id"] = players[i].id
+            realmObject["objectId"] = String(players[i].id)
+            realmObject["order"] = players[i].id
             realmObject["name"] = players[i].name
             realmObject["money"] = players[i].money
             for (var j=0; j<players[i].rank_list.count; j++){
@@ -55,23 +60,21 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             }
         }
     }
-
-    func loadData(){
-        let query:PFQuery = PFQuery(className: "realms")
-        query.orderByAscending("createdAt")
-        query.findObjectsInBackgroundWithBlock{(objects: [PFObject]?, error: NSError?) -> Void in
-            if (error != nil){
-            }
-            print(objects)
-//            for object in objects! {
-//                print(object["name"] as! String)
-//            }
-        }
-    }
     
-    func fetch_player(name: String){
+//    func loadData(callback:([PFObject]!, NSError!) -> ())  {
+//        let query: PFQuery = PFQuery(className: "realms")
+//        query.orderByAscending("createdAt")
+//        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+//            if (error != nil){
+//                // エラー処理
+//            }
+//            callback(objects! as [PFObject], error)
+//        }
+//    }
+    
+    func fetch_player(order: Int){
         let query: PFQuery = PFQuery(className: "realms")
-        query.whereKey("name", containsString: "\(name)")
+        query.whereKey("order", containsString: "\(order)")
         query.orderByAscending("createdAt")
         
         // バックグラウンドでデータを取得
@@ -84,6 +87,14 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             }
         }
     }
+    
+//    func update_players(){
+//        let realm = try! Realm()
+//        players = realm.objects(Player).map { $0 }
+//        let query: PFQuery = PFQuery(className: "realms")
+//        query.
+//        
+//    }
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
