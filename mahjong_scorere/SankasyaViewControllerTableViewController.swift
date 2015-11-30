@@ -23,10 +23,9 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         self.navigationItem.title = "参加者"
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
-
         save_players()
-//        print(players)
-//        fetch_player(1)
+        print(players)
+//        fetch_player(0)
         
         
         // 編集ボタンを左上に配置
@@ -40,9 +39,8 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             var rank_array:[Int] = []
             var point_array:[Int] = []
             let realmObject = PFObject(className: "realms")
-            //realmObject["id"] = players[i].id
-            realmObject["objectId"] = String(players[i].id)
-            realmObject["order"] = players[i].id
+            realmObject["identifier"] = ""
+            realmObject["order"] = players[i].order
             realmObject["name"] = players[i].name
             realmObject["money"] = players[i].money
             for (var j=0; j<players[i].rank_list.count; j++){
@@ -56,6 +54,7 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
                 if success {
                     print("Data has been saved")
+                    self.players[i].identifier = realmObject["objectId"] as! String
                 }
             }
         }
@@ -72,9 +71,9 @@ class SankasyaViewControllerTableViewController: UITableViewController{
 //        }
 //    }
     
-    func fetch_player(order: Int){
+    func fetch_player(id: Int){
         let query: PFQuery = PFQuery(className: "realms")
-        query.whereKey("order", containsString: "\(order)")
+        query.whereKey("objectId", containsString: "\(id)")
         query.orderByAscending("createdAt")
         
         // バックグラウンドでデータを取得
@@ -117,7 +116,7 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             for(var i = indexPath.row; i <= Int(self.players.count)-2; i++) {
                 let shift_player = Player()
                 shift_player.name = self.players[i+1].name
-                shift_player.id = self.players[i+1].id - 1
+                shift_player.order = self.players[i+1].order - 1
                 shift_player.money = self.players[i+1].money
                 try! realm.write {
                     realm.add(shift_player, update: true)
@@ -210,17 +209,17 @@ class SankasyaViewControllerTableViewController: UITableViewController{
                 }
             }
             if exist == false{
-                let newID: Int
+                let newOrder: Int
                 let newplayer = Player()
-                if let lastPlayer = realm.objects(Player).sorted("id").last {
-                    newID = lastPlayer.id + 1
+                if let lastPlayer = realm.objects(Player).sorted("order").last {
+                    newOrder = lastPlayer.order + 1
                 } else {
-                    newID = 0
+                    newOrder = 0
                 }
                 
                 newplayer.name = inputTextField!.text!
                 newplayer.money = 0
-                newplayer.id = newID
+                newplayer.order = newOrder
                 newplayer.point_list.appendContentsOf([])
                 newplayer.rank_list.appendContentsOf([])
                 
@@ -234,6 +233,7 @@ class SankasyaViewControllerTableViewController: UITableViewController{
 //                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
 //                alertController.addAction(defaultAction)
             }
+            
         }
         alertController.addAction(logintAction)
         

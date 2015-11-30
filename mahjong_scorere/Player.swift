@@ -23,13 +23,14 @@ class Ranks: Object {
 class Player: Object {
 
     // プロパティと初期値の設定
-    dynamic var id: Int = 0
+    dynamic var order: Int = 0
     dynamic var name: String = ""
     dynamic var money: Int = 0
+    dynamic var identifier: String = ""
     var point_list = List<Points>()
     var rank_list = List<Ranks>()
     
     override class func primaryKey() -> String {
-        return "id"
+        return "order"
     }
 }

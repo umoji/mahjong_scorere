@@ -22,23 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Parse.setApplicationId("P98USbXMJGhxHe25LZvKMZQu8i7TzCrBLQ2TmfwQ",
             clientKey: "trF0gL1FWsVIHI7CH0XR8ftg4C2Bco61FJKIMkzp")
-        
         let config = Realm.Configuration(
             // 新しいスキーマバージョンを設定します。以前のバージョンより大きくなければなりません。
             // （スキーマバージョンを設定したことがなければ、最初は0が設定されています）
-            schemaVersion: 1,
+            schemaVersion: 6,
             
             // マイグレーション処理を記述します。古いスキーマバージョンのRealmを開こうとすると
             // 自動的にマイグレーションが実行されます。
             migrationBlock: { migration, oldSchemaVersion in
-                // 最初のマイグレーションの場合、`oldSchemaVersion`は0です
-                if (oldSchemaVersion < 2) {
+            // 最初のマイグレーションの場合、`oldSchemaVersion`は0です
+                if (oldSchemaVersion < 6) {
                     migration.enumerate(Player.className()) { oldObject, newObject in
                         // firstNameとlastNameをfullNameプロパティに結合します
-                        let point = oldObject!["point"] as! Int
-                        newObject!["money"] = point
-                        newObject!["point_list"] = []
-                        newObject!["rank_list"] = []
+                        
                     }
                 }
         })
