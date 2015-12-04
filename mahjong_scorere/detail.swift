@@ -24,7 +24,7 @@ class DetailViewController: UIViewController{
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
         let player = players[playerNumber]
-        print(player)
+        // print(player)
         playername.placeholder = "\(players[playerNumber].name)"
         playermoney.placeholder = "\(players[playerNumber].money)"
         playername.keyboardType = UIKeyboardType.NumbersAndPunctuation

@@ -23,41 +23,69 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         self.navigationItem.title = "参加者"
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
-        save_players()
-        print(players)
-//        fetch_player(0)
+//        save_players()
+//        update_players()
+//        print(players)
+        fetch_player()
         
         
         // 編集ボタンを左上に配置
-        navigationItem.leftBarButtonItem = editButtonItem()        
+        navigationItem.leftBarButtonItem = editButtonItem()
+//        print(players)
+//        fetch_player()
+        
+        
     }
     
     func save_players(){
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
-        for (var i=0; i<players.count; i++){
-            var rank_array:[Int] = []
-            var point_array:[Int] = []
-            let realmObject = PFObject(className: "realms")
-            realmObject["identifier"] = ""
-            realmObject["order"] = players[i].order
-            realmObject["name"] = players[i].name
-            realmObject["money"] = players[i].money
-            for (var j=0; j<players[i].rank_list.count; j++){
-                rank_array.append(players[i].rank_list[j].rank)
+        let query: PFQuery = PFQuery(className: "realms")
+        query.orderByAscending("createdAt")
+        
+        for p in players {
+            let pp = PFObject(className: "realms")
+            
+            pp["order"] = p.order
+            pp["name"] = p.name
+            pp["money"] = p.money
+            pp["rank_list"] = p.rank_list.map { $0.rank }
+            pp["point_list"] = p.point_list.map { $0.point }
+            
+            try! pp.save()
+            
+            try! realm.write {
+                p.identifier = pp.objectId!
             }
-            realmObject["rank_list"] = rank_array
-            for (var k=0; k<players[i].rank_list.count; k++){
-                point_array.append(players[i].point_list[k].point)
-            }
-            realmObject["point_list"] = point_array
-            realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
-                if success {
-                    print("Data has been saved")
-                    self.players[i].identifier = realmObject["objectId"] as! String
-                }
-            }
+            
+            pp["identifier"] = pp.objectId!
+            
+            try! pp.save()
         }
+        
+//        for (var i=0; i<players.count; i++){
+//            var rank_array:[Int] = []
+//            var point_array:[Int] = []
+//            let realmObject = PFObject(className: "realms")
+//            realmObject["identifier"] = ""
+//            realmObject["order"] = players[i].order
+//            realmObject["name"] = players[i].name
+//            realmObject["money"] = players[i].money
+//            for (var j=0; j<players[i].rank_list.count; j++){
+//                rank_array.append(players[i].rank_list[j].rank)
+//            }
+//            realmObject["rank_list"] = rank_array
+//            for (var k=0; k<players[i].rank_list.count; k++){
+//                point_array.append(players[i].point_list[k].point)
+//            }
+//            realmObject["point_list"] = point_array
+//            realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
+//                if success {
+//                    print("Data has been saved")
+//                    self.players[i].identifier = realmObject["objectId"] as! String
+//                }
+//            }
+//        }
     }
     
 //    func loadData(callback:([PFObject]!, NSError!) -> ())  {
@@ -71,29 +99,108 @@ class SankasyaViewControllerTableViewController: UITableViewController{
 //        }
 //    }
     
-    func fetch_player(id: Int){
-        let query: PFQuery = PFQuery(className: "realms")
-        query.whereKey("objectId", containsString: "\(id)")
-        query.orderByAscending("createdAt")
+    func fetch_player() {
+        let realm = try! Realm()
+//        realm.deleteAll()
+        players = realm.objects(Player).map { $0 }
         
-        // バックグラウンドでデータを取得
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+        let query: PFQuery = PFQuery(className: "realms")
+        query.orderByAscending("createdAt")
+        //let pp = PFObject(className: "realms")
+        let player = Player()
+        var RankList = [Int]()
+        var PointList = [Int]()
+        var i = 0
+        var j = 0
+        query.findObjectsInBackgroundWithBlock{ (objects, error) -> Void in
             for object in objects! {
-                
                 if(error == nil){
-                    print(object)
+                    player.order = object["order"] as! Int
+                    player.name = object["name"] as! String
+                    player.money = object["money"] as! Int
+                    player.identifier = object["identifier"] as! String
+//                    print(object["rank_list"])
+//                    print(object["rank_list"][0])
+
+//                    while(object["rank_list"][i] != nil){
+//                        RankList.append((object["rank_list"][i]) as! Int)
+//                        i += 1
+//                        print(i)
+//                    }
+                    
+//                    while(object["rank_list"][i] != nil){
+//                        print(object["rank_list"][i])
+//                        i += 1
+//                    }
+                    while(true){
+                        print(object["rank_list"][i])
+                        i += 1
+                    }
+                    
+                    while(object["point_list"][j] != nil){
+                        print(object["point_list"][j])
+                        j += 1
+                    }
+                    
+//                    for(i=0;i<3;i++){
+//                        if(object["rank_list"][i] != nil){
+//                            RankList.append((object["rank_list"][i]) as! Int)
+//                            i += 1
+//                        }else{
+////                            break
+//                        }
+//                    }
+                    
+//                    while(object["point_list"][j] != nil){
+//                        PointList.append((object["point_list"][j]) as! Int)
+//                        j += 1
+//                        print(j)
+//                    }
+                    
+//                    for(j=0;j<3;j++){
+//                        if(object["point_list"][j] != nil){
+//                            PointList.append((object["point_list"][j]) as! Int)
+//                            j += 1
+//                        }else{
+////                            break
+//                        }
+//                    }
+                    print(RankList)
+                    print(PointList)
+                    
                 }
             }
         }
     }
     
-//    func update_players(){
-//        let realm = try! Realm()
-//        players = realm.objects(Player).map { $0 }
-//        let query: PFQuery = PFQuery(className: "realms")
-//        query.
-//        
-//    }
+    func update_players(){
+        let realm = try! Realm()
+        players = realm.objects(Player).map { $0 }
+        let query: PFQuery = PFQuery(className: "realms")
+        query.orderByAscending("createdAt")
+        
+        query.getObjectInBackgroundWithId(players[0].identifier){ (objects, error) -> Void in
+            print(objects)
+        }
+//        for p in players {
+////            var pp = PFObject(className: "realms")
+//            
+//            print(query.getObjectInBackgroundWithId(p.identifier))
+//            
+////            pp["order"] = p.order
+////            pp["name"] = p.name
+////            pp["money"] = p.money
+////            pp["rank_list"] = p.rank_list.map { $0.rank }
+////            pp["point_list"] = p.point_list.map { $0.point }
+////            
+////            try! pp.save()
+////            
+////            try! realm.write {
+////                p.identifier = pp.objectId!
+////            }
+//        }
+        
+    }
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
