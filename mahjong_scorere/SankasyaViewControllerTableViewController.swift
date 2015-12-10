@@ -23,15 +23,24 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         self.navigationItem.title = "参加者"
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
+        try! realm.write {
+            realm.deleteAll()
+        }
+        fetch_player(tableView)
+
 //        save_players()
 //        update_players()
 //        print(players)
-        fetch_player()
+        players = realm.objects(Player).map { $0 }
+
+
+
         
+        self.tableView.reloadData()
         
         // 編集ボタンを左上に配置
         navigationItem.leftBarButtonItem = editButtonItem()
-//        print(players)
+        //print(players)
 //        fetch_player()
         
         
@@ -62,30 +71,6 @@ class SankasyaViewControllerTableViewController: UITableViewController{
             
             try! pp.save()
         }
-        
-//        for (var i=0; i<players.count; i++){
-//            var rank_array:[Int] = []
-//            var point_array:[Int] = []
-//            let realmObject = PFObject(className: "realms")
-//            realmObject["identifier"] = ""
-//            realmObject["order"] = players[i].order
-//            realmObject["name"] = players[i].name
-//            realmObject["money"] = players[i].money
-//            for (var j=0; j<players[i].rank_list.count; j++){
-//                rank_array.append(players[i].rank_list[j].rank)
-//            }
-//            realmObject["rank_list"] = rank_array
-//            for (var k=0; k<players[i].rank_list.count; k++){
-//                point_array.append(players[i].point_list[k].point)
-//            }
-//            realmObject["point_list"] = point_array
-//            realmObject.saveInBackgroundWithBlock { (success, error) -> Void in
-//                if success {
-//                    print("Data has been saved")
-//                    self.players[i].identifier = realmObject["objectId"] as! String
-//                }
-//            }
-//        }
     }
     
 //    func loadData(callback:([PFObject]!, NSError!) -> ())  {
@@ -99,7 +84,7 @@ class SankasyaViewControllerTableViewController: UITableViewController{
 //        }
 //    }
     
-    func fetch_player() {
+    func fetch_player(tableVew: UITableView) {
         let realm = try! Realm()
 //        realm.deleteAll()
         players = realm.objects(Player).map { $0 }
@@ -107,69 +92,47 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         let query: PFQuery = PFQuery(className: "realms")
         query.orderByAscending("createdAt")
         //let pp = PFObject(className: "realms")
-        let player = Player()
-        var RankList = [Int]()
-        var PointList = [Int]()
+
         var i = 0
-        var j = 0
+
         query.findObjectsInBackgroundWithBlock{ (objects, error) -> Void in
             for object in objects! {
                 if(error == nil){
-                    player.order = object["order"] as! Int
-                    player.name = object["name"] as! String
-                    player.money = object["money"] as! Int
-                    player.identifier = object["identifier"] as! String
-//                    print(object["rank_list"])
-//                    print(object["rank_list"][0])
-
-//                    while(object["rank_list"][i] != nil){
-//                        RankList.append((object["rank_list"][i]) as! Int)
-//                        i += 1
-//                        print(i)
-//                    }
-                    
-//                    while(object["rank_list"][i] != nil){
-//                        print(object["rank_list"][i])
-//                        i += 1
-//                    }
-                    while(true){
-                        print(object["rank_list"][i])
-                        i += 1
+                    let player = Player()
+                    for (i=0;i<object["rank_list"].count;i++){
+                        let r = Ranks()
+                        r.rank = object["rank_list"][i] as! Int
+                        try! realm.write{
+                            player.rank_list.append(r)
+                        }
                     }
                     
-                    while(object["point_list"][j] != nil){
-                        print(object["point_list"][j])
-                        j += 1
+                    for (i=0;i<object["point_list"].count;i++){
+                        let p = Points()
+                        p.point = object["point_list"][i] as! Int
+                        try! realm.write{
+                            player.point_list.append(p)
+                        }
                     }
                     
-//                    for(i=0;i<3;i++){
-//                        if(object["rank_list"][i] != nil){
-//                            RankList.append((object["rank_list"][i]) as! Int)
-//                            i += 1
-//                        }else{
-////                            break
-//                        }
-//                    }
+                    try! realm.write{
+                        player.order = object["order"] as! Int
+                        player.name = object["name"] as! String
+                        player.money = object["money"] as! Int
+                        player.identifier = object["identifier"] as! String
+                    }
                     
-//                    while(object["point_list"][j] != nil){
-//                        PointList.append((object["point_list"][j]) as! Int)
-//                        j += 1
-//                        print(j)
-//                    }
                     
-//                    for(j=0;j<3;j++){
-//                        if(object["point_list"][j] != nil){
-//                            PointList.append((object["point_list"][j]) as! Int)
-//                            j += 1
-//                        }else{
-////                            break
-//                        }
-//                    }
-                    print(RankList)
-                    print(PointList)
+                    try! realm.write{
+                        realm.add(player)
+                    }
+                    
+                    print(realm.objects(Player).map { $0 })
                     
                 }
             }
+            self.players = realm.objects(Player).map { $0 }
+            self.tableView.reloadData()
         }
     }
     

@@ -25,15 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = Realm.Configuration(
             // 新しいスキーマバージョンを設定します。以前のバージョンより大きくなければなりません。
             // （スキーマバージョンを設定したことがなければ、最初は0が設定されています）
-            schemaVersion: 6,
+            schemaVersion: 12,
             
             // マイグレーション処理を記述します。古いスキーマバージョンのRealmを開こうとすると
             // 自動的にマイグレーションが実行されます。
             migrationBlock: { migration, oldSchemaVersion in
             // 最初のマイグレーションの場合、`oldSchemaVersion`は0です
-                if (oldSchemaVersion < 6) {
+                if (oldSchemaVersion < 12) {
                     migration.enumerate(Player.className()) { oldObject, newObject in
-                        // firstNameとlastNameをfullNameプロパティに結合します
                         
                     }
                 }

@@ -30,7 +30,8 @@ class Player: Object {
     var point_list = List<Points>()
     var rank_list = List<Ranks>()
     
-    override class func primaryKey() -> String {
-        return "order"
-    }
+//    override class func primaryKey() -> String {
+//        return "number"
+//    }
+    
 }
