@@ -23,26 +23,19 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         self.navigationItem.title = "参加者"
         let realm = try! Realm()
         players = realm.objects(Player).map { $0 }
-        try! realm.write {
-            realm.deleteAll()
-        }
-        fetch_player(tableView)
+
+//        update_players()
+//        try! realm.write {
+//            realm.deleteAll()
+//        }
+//        fetch_player(tableView)
 
 //        save_players()
-//        update_players()
-//        print(players)
-        players = realm.objects(Player).map { $0 }
 
-
-
-        
-        self.tableView.reloadData()
+        print(players)
         
         // 編集ボタンを左上に配置
         navigationItem.leftBarButtonItem = editButtonItem()
-        //print(players)
-//        fetch_player()
-        
         
     }
     
@@ -88,18 +81,14 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         let realm = try! Realm()
 //        realm.deleteAll()
         players = realm.objects(Player).map { $0 }
-        
         let query: PFQuery = PFQuery(className: "realms")
         query.orderByAscending("createdAt")
-        //let pp = PFObject(className: "realms")
-
-        var i = 0
-
+        
         query.findObjectsInBackgroundWithBlock{ (objects, error) -> Void in
             for object in objects! {
                 if(error == nil){
                     let player = Player()
-                    for (i=0;i<object["rank_list"].count;i++){
+                    for (var i=0;i<object["rank_list"].count;i++){
                         let r = Ranks()
                         r.rank = object["rank_list"][i] as! Int
                         try! realm.write{
@@ -107,7 +96,7 @@ class SankasyaViewControllerTableViewController: UITableViewController{
                         }
                     }
                     
-                    for (i=0;i<object["point_list"].count;i++){
+                    for (var i=0;i<object["point_list"].count;i++){
                         let p = Points()
                         p.point = object["point_list"][i] as! Int
                         try! realm.write{
@@ -126,13 +115,11 @@ class SankasyaViewControllerTableViewController: UITableViewController{
                     try! realm.write{
                         realm.add(player)
                     }
-                    
-                    print(realm.objects(Player).map { $0 })
-                    
                 }
             }
             self.players = realm.objects(Player).map { $0 }
             self.tableView.reloadData()
+            print(self.players)
         }
     }
     
@@ -142,26 +129,28 @@ class SankasyaViewControllerTableViewController: UITableViewController{
         let query: PFQuery = PFQuery(className: "realms")
         query.orderByAscending("createdAt")
         
-        query.getObjectInBackgroundWithId(players[0].identifier){ (objects, error) -> Void in
-            print(objects)
-        }
-//        for p in players {
-////            var pp = PFObject(className: "realms")
-//            
+        query.getObjectInBackgroundWithId(players[0].identifier){ (object, error) -> Void in
+            
+            print(object)
+
+//        for p in self.players {
+//            var pp = PFObject(className: "realms")
+            
 //            print(query.getObjectInBackgroundWithId(p.identifier))
+            
+//            pp["order"] = p.order
+//            pp["name"] = p.name
+//            pp["money"] = p.money
+//            pp["rank_list"] = p.rank_list.map { $0.rank }
+//            pp["point_list"] = p.point_list.map { $0.point }
 //            
-////            pp["order"] = p.order
-////            pp["name"] = p.name
-////            pp["money"] = p.money
-////            pp["rank_list"] = p.rank_list.map { $0.rank }
-////            pp["point_list"] = p.point_list.map { $0.point }
-////            
-////            try! pp.save()
-////            
-////            try! realm.write {
-////                p.identifier = pp.objectId!
-////            }
-//        }
+//            try! pp.save()
+//            
+//            try! realm.write {
+//                p.identifier = pp.objectId!
+//            }
+//            }
+        }
         
     }
     
@@ -296,6 +285,27 @@ class SankasyaViewControllerTableViewController: UITableViewController{
                 try! realm.write {
                     realm.add(newplayer)
                 }
+                
+                let query: PFQuery = PFQuery(className: "realms")
+                query.orderByAscending("createdAt")
+                let pp = PFObject(className: "realms")
+                
+                pp["order"] = newplayer.order
+                pp["name"] = newplayer.name
+                pp["money"] = newplayer.money
+                pp["rank_list"] = newplayer.rank_list.map { $0.rank }
+                pp["point_list"] = newplayer.point_list.map { $0.point }
+                
+                try! pp.save()
+                
+                try! realm.write {
+                    newplayer.identifier = pp.objectId!
+                }
+                
+                pp["identifier"] = pp.objectId!
+                
+                try! pp.save()
+                
                 self.players = realm.objects(Player).map { $0 }
                 self.tableView.reloadData()
             }else{

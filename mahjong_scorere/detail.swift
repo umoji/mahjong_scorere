@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Charts
+import Parse
 
 class DetailViewController: UIViewController{
     var players = [Player]()
@@ -182,6 +183,12 @@ class DetailViewController: UIViewController{
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
+            let findPlayer:PFQuery = PFQuery(className: "realms")
+            findPlayer.getObjectInBackgroundWithId("\(players[playerNumber].identifier)"){ (object, error) -> Void in
+                object!["name"] = self.players[playerNumber].name
+                object!["money"] = self.players[playerNumber].money
+                try! object!.save()
+            }
         }else if playername.text != "" && playermoney.text == ""{
             print("changed name")
             try! realm.write{
@@ -191,6 +198,12 @@ class DetailViewController: UIViewController{
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
+            let findPlayer:PFQuery = PFQuery(className: "realms")
+            findPlayer.getObjectInBackgroundWithId("\(players[playerNumber].identifier)"){ (object, error) -> Void in
+                object!["name"] = self.players[playerNumber].name
+                try! object!.save()
+            }
+
         }else if playername.text == "" && playermoney.text != ""{
             print("changed money")
             try! realm.write{
@@ -200,6 +213,12 @@ class DetailViewController: UIViewController{
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
+            let findPlayer:PFQuery = PFQuery(className: "realms")
+            findPlayer.getObjectInBackgroundWithId("\(players[playerNumber].identifier)"){ (object, error) -> Void in
+                object!["money"] = self.players[playerNumber].money
+                try! object!.save()
+            }
+
         }else{
 //            let alertController = UIAlertController(title: "Nothing Changed!!", message: "Nothing Changed", preferredStyle: .Alert)
 //            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
