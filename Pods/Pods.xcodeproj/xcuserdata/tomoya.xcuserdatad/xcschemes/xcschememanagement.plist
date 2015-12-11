@@ -4,50 +4,68 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Bolts.xcscheme</key>
+		<key>Bolts.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
-		<key>Charts.xcscheme</key>
+		<key>Charts.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
-		<key>PNChartSwift.xcscheme</key>
+		<key>PNChartSwift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
-		<key>Parse.xcscheme</key>
+		<key>Parse.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
-		<key>Pods-mahjong_scorere.xcscheme</key>
+		<key>Pods-mahjong_scorere.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>0</integer>
 		</dict>
-		<key>Pods-mahjong_scorereTests.xcscheme</key>
+		<key>Pods-mahjong_scorereTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
-		<key>Realm.xcscheme</key>
+		<key>Realm.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>10</integer>
 		</dict>
-		<key>RealmSwift.xcscheme</key>
+		<key>RealmSwift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
+			<key>orderHint</key>
+			<integer>11</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

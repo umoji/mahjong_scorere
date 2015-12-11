@@ -131,7 +131,7 @@ public:
     ref_type write(size_t, size_t, size_t,
                    _impl::OutputStream&) const override;
 
-    void insert_rows(size_t, size_t, size_t) override;
+    void insert_rows(size_t, size_t, size_t, bool) override;
     void erase_rows(size_t, size_t, size_t, bool) override;
     void move_last_row_over(size_t, size_t, bool) override;
     void swap_rows(size_t, size_t) override;
@@ -140,6 +140,7 @@ public:
     void adj_acc_insert_rows(size_t, size_t) noexcept override;
     void adj_acc_erase_row(size_t) noexcept override;
     void adj_acc_move_over(size_t, size_t) noexcept override;
+    void adj_acc_swap_rows(size_t, size_t) noexcept override;
     void adj_acc_clear_root_table() noexcept override;
     void mark(int) noexcept override;
     void refresh_accessor_tree(size_t, const Spec&) override;

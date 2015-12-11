@@ -4,11 +4,11 @@ PODS:
   - Parse (1.10.0):
     - Bolts/Tasks (~> 1.5)
   - PNChartSwift (0.0.2)
-  - Realm (0.96.2):
-    - Realm/Headers (= 0.96.2)
-  - Realm/Headers (0.96.2)
-  - RealmSwift (0.96.2):
-    - Realm (= 0.96.2)
+  - Realm (0.96.3):
+    - Realm/Headers (= 0.96.3)
+  - Realm/Headers (0.96.3)
+  - RealmSwift (0.96.3):
+    - Realm (= 0.96.3)
 
 DEPENDENCIES:
   - Charts (from `https://github.com/danielgindi/ios-charts.git`)
@@ -31,16 +31,16 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Charts:
-    :commit: a942a4a4faf520cef323fa23fb103c6ec7e16670
+    :commit: 3f88894f31683888862cf14312db74b05c1a0101
     :git: https://github.com/danielgindi/ios-charts.git
   PNChartSwift:
     :commit: 88eb8bcb4cd415d02775b2d355542b8bd338712d
     :git: https://github.com/kevinzhow/PNChart-Swift.git
   Realm:
-    :commit: a4e4fbb8dc285ea7c2a794f00ef7f2fb4996ec95
+    :commit: dbc561996458017560c18898a4bf14f39ec6c68e
     :git: https://github.com/realm/realm-cocoa.git
   RealmSwift:
-    :commit: a4e4fbb8dc285ea7c2a794f00ef7f2fb4996ec95
+    :commit: dbc561996458017560c18898a4bf14f39ec6c68e
     :git: https://github.com/realm/realm-cocoa.git
 
 SPEC CHECKSUMS:
@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   Charts: 5e1e5ac23898e5b09d226a2fc3e9d86bc281937e
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
   PNChartSwift: bcdfbffd65920072463eff42d0dfb46189bf4495
-  Realm: 962a3daeb000dfd379e0a9ccb2a752a352a88205
-  RealmSwift: 485599fe54e35461c4a0daa7d01d8fbf11424873
+  Realm: 5a752064f88557eb4a9e3fc5fb8b89e864017a70
+  RealmSwift: aab84968aad662f61f36473d1aea019f63481505
 
 COCOAPODS: 0.39.0

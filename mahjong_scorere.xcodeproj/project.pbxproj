@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		102F41E9282472FCB284AE90 /* libPods-mahjong_scorereTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 924BB4BB0CDB9703981C48B1 /* libPods-mahjong_scorereTests.a */; };
-		379EEACF5D5B08578599E6C4 /* libPods-mahjong_scorere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C11616C9E248C76177752FB /* libPods-mahjong_scorere.a */; };
 		641A3D021BF0473E0042F042 /* ShiharaiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641A3D011BF0473E0042F042 /* ShiharaiViewController.swift */; };
 		64493B9A1BE3CEB600BA7E77 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64493B991BE3CEB600BA7E77 /* Player.swift */; };
 		646F94F11BFEFEB100243244 /* detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646F94F01BFEFEB100243244 /* detail.swift */; };
@@ -116,7 +115,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				646F95241C04314D00243244 /* Charts.framework in Frameworks */,
-				379EEACF5D5B08578599E6C4 /* libPods-mahjong_scorere.a in Frameworks */,
 				91BC86A5BE0AD08F507D7442 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,6 +311,7 @@
 				TargetAttributes = {
 					6486EDE11BDE1EDF004B5DCF = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 752SY37786;
 					};
 					6486EDF91BDE1EDF004B5DCF = {
 						CreatedOnToolsVersion = 6.4;
@@ -630,13 +629,36 @@
 			baseConfigurationReference = 085111784507581E296C430A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = mahjong_scorere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PODS_ROOT = /Users/tomoya/Documents/XcodeProjects/mahjong_scorere/Pods;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"Charts\"",
+					"-framework",
+					"\"PNChartSwift\"",
+					"-framework",
+					"\"Parse\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"$(inherited)",
+				);
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mito.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = mahjong_scorere/mahjong_scorere_Bridging_Header.h;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -645,13 +667,36 @@
 			baseConfigurationReference = 8F1ADD5A0D80CFD9362051C7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = mahjong_scorere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PODS_ROOT = /Users/tomoya/Documents/XcodeProjects/mahjong_scorere/Pods;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"Charts\"",
+					"-framework",
+					"\"PNChartSwift\"",
+					"-framework",
+					"\"Parse\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"$(inherited)",
+				);
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mito.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = mahjong_scorere/mahjong_scorere_Bridging_Header.h;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -8,6 +8,8 @@
 
 import UIKit
 import RealmSwift
+import Parse
+
 
 class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     var players = [Player]()
@@ -263,7 +265,88 @@ class KekkaViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.players[self.player4number].point_list.append(tensu4)
             self.players[self.player4number].rank_list.append(juni4)
         }
+        let findPlayer:PFQuery = PFQuery(className: "realms")
+        let pns = [player1number, player2number, player3number, player4number]
+        let ids = pns.map { self.players[$0].identifier }
+        let tns = [tensu1.point,tensu2.point,tensu3.point,tensu4.point]
+        
+//        typealias PlayerData = (playerNumber: Int, identifier: String)
+        
+        zip(pns, ids).enumerate().forEach { i, tuple in
+            let p = try! findPlayer.getObjectWithId(tuple.1)
+            p["money"] = self.players[tuple.0].money
+            p["rank_list"] = (p["rank_list"] as! [Int]) + [i+1]
+            p["point_list"] = (p["point_list"] as! [Int]) + [tns[i]]
+            p.saveInBackground()
+        }
+//        let p = try! findPlayer.getObjectWithId(self.players[player1number].identifier)
+//        print(p)
+//        p["money"] = self.players[self.player1number].money
+////        p["rank_list"] = self.players[self.player1number].rank_list
+////        p["point_list"] = self.players[self.player1number].point_list
+//        p.saveInBackground()
+        
+//        let p1 = try! findPlayer.getObjectWithId("\(self.players[player1number].identifier)")
+//        p1.saveInBackgroundWithBlock { (flag, err) -> Void in
+//            p1["money"] = self.players[self.player1number].money
+//            p1["rank_list"] = self.players[self.player1number].rank_list
+//            p1["point_list"] = self.players[self.player1number].point_list
+//        }
+//        
+//        let p2 = try! findPlayer.getObjectWithId("\(self.players[player2number].identifier)")
+//        p2.saveInBackgroundWithBlock { (flag, err) -> Void in
+//            p2["money"] = self.players[self.player2number].money
+//            p2["rank_list"] = self.players[self.player2number].rank_list
+//            p2["point_list"] = self.players[self.player2number].point_list
+//        }
+//        
+//        let p3 = try! findPlayer.getObjectWithId("\(self.players[player3number].identifier)")
+//        p3.saveInBackgroundWithBlock { (flag, err) -> Void in
+//            p3["money"] = self.players[self.player3number].money
+//            p3["rank_list"] = self.players[self.player3number].rank_list
+//            p3["point_list"] = self.players[self.player3number].point_list
+//        }
+//        
+//        let p4 = try! findPlayer.getObjectWithId("\(self.players[player4number].identifier)")
+//        p4.saveInBackgroundWithBlock { (flag, err) -> Void in
+//            p4["money"] = self.players[self.player4number].money
+//            p4["rank_list"] = self.players[self.player4number].rank_list
+//            p4["point_list"] = self.players[self.player4number].point_list
+//        }
+
+
+        
+//        findPlayer.getObjectInBackgroundWithId("\(self.players[player1number].identifier)"){ (object, error) -> Void in
+//                object?.saveEventually { flag, error in
+//                object!["money"] = self.players[self.player1number].money
+//                object!["rank_list"] = self.players[self.player1number].rank_list
+//                object!["point_list"] = self.players[self.player1number].point_list
+//            }
+//        }
+//        findPlayer.getObjectInBackgroundWithId("\(self.players[player2number].identifier)"){ (object, error) -> Void in
+//            object?.saveEventually { flag, error in
+//                object!["money"] = self.players[self.player2number].money
+//                object!["rank_list"] = self.players[self.player2number].rank_list
+//                object!["point_list"] = self.players[self.player2number].point_list
+//            }
+//        }
+//        findPlayer.getObjectInBackgroundWithId("\(self.players[player3number].identifier)"){ (object, error) -> Void in
+//            object?.saveEventually { flag, error in
+//                object!["money"] = self.players[self.player3number].money
+//                object!["rank_list"] = self.players[self.player3number].rank_list
+//                object!["point_list"] = self.players[self.player3number].point_list
+//            }
+//        }
+//        findPlayer.getObjectInBackgroundWithId("\(self.players[player4number].identifier)"){ (object, error) -> Void in
+//            object?.saveEventually { flag, error in
+//                object!["money"] = self.players[self.player4number].money
+//                object!["rank_list"] = self.players[self.player4number].rank_list
+//                object!["point_list"] = self.players[self.player4number].point_list
+//            }
+//        }
+        players = realm.objects(Player).map{$0}
+        
     }
 }
-    
+
 

@@ -183,6 +183,11 @@ public:
     size_t size() const noexcept;
     size_t num_attached_rows() const noexcept;
 
+    // Get the query used to create this TableView
+    // The query will have a null source table if this tv was not created from
+    // a query
+    const Query& get_query() const noexcept;
+
     // Column information
     const ColumnBase& get_column_base(size_t index) const;
 
@@ -301,6 +306,15 @@ public:
     // Sort m_row_indexes according to multiple columns
     void sort(std::vector<size_t> columns, std::vector<bool> ascending);
 
+    // Remove rows that are duplicated with respect to the column set passed as argument. 
+    // distinct() will preserve the original order of the row pointers, also if the order is a result of sort()
+    // If two rows are indentical (for the given set of distinct-columns), then the last row is removed.
+    // You can call sync_if_needed() to update the distinct view, just like you can for a sorted view.
+    // Each time you call distinct() it will first fetch the full original TableView contents and then apply
+    // distinct() on that. So it distinct() does not filter the result of the previous distinct().
+    void distinct(size_t column);
+    void distinct(std::vector<size_t> columns);
+
     // Actual sorting facility is provided by the base class:
     using RowIndexes::sort;
 
@@ -322,8 +336,14 @@ protected:
 
     // m_distinct_column_source != npos if this view was created from distinct values in a column of m_table.
     size_t m_distinct_column_source;
+
+    // If m_distinct_columns.size() > 0, it means that this TableView has had called TableView::distinct() and
+    // must only contain unique rows with respect to that column set of the parent table
+    std::vector<size_t> m_distinct_columns;
+
     Sorter m_sorting_predicate; // Stores sorting criterias (columns + ascending)
     bool m_auto_sort = false;
+
 
     // A valid query holds a reference to its table which must match our m_table.
     // hence we can use a query with a null table reference to indicate that the view
@@ -410,6 +430,7 @@ private:
     void adj_row_acc_insert_rows(size_t row_ndx, size_t num_rows) noexcept;
     void adj_row_acc_erase_row(size_t row_ndx) noexcept;
     void adj_row_acc_move_over(size_t from_row_ndx, size_t to_row_ndx) noexcept;
+    void adj_row_acc_clear() noexcept;
 
     template<typename Tab>
     friend class BasicTableView;
@@ -697,6 +718,10 @@ private:
 // ================================================================================================
 // TableViewBase Implementation:
 
+inline const Query& TableViewBase::get_query() const noexcept
+{
+    return m_query;
+}
 
 inline bool TableViewBase::is_empty() const noexcept
 {
@@ -811,7 +836,8 @@ inline TableViewBase::TableViewBase(const TableViewBase& tv):
     m_linkview_source(tv.m_linkview_source),
     m_last_seen_version(tv.m_last_seen_version),
     m_distinct_column_source(tv.m_distinct_column_source),
-    m_sorting_predicate(tv.m_sorting_predicate),
+    m_distinct_columns(std::move(tv.m_distinct_columns)),
+    m_sorting_predicate(std::move(tv.m_sorting_predicate)),
     m_auto_sort(tv.m_auto_sort),
     m_query(tv.m_query),
     m_start(tv.m_start),
@@ -837,14 +863,15 @@ inline TableViewBase::TableViewBase(TableViewBase&& tv) noexcept:
     m_linked_table(move(tv.m_linked_table)),
     m_linked_column(tv.m_linked_column),
     m_linked_row(tv.m_linked_row),
-    m_linkview_source(tv.m_linkview_source),
+    m_linkview_source(std::move(tv.m_linkview_source)),
     // if we are created from a table view which is outdated, take care to use the outdated
     // version number so that we can later trigger a sync if needed.
     m_last_seen_version(tv.m_last_seen_version),
     m_distinct_column_source(tv.m_distinct_column_source),
-    m_sorting_predicate(tv.m_sorting_predicate),
+    m_distinct_columns(std::move(tv.m_distinct_columns)),
+    m_sorting_predicate(std::move(tv.m_sorting_predicate)),
     m_auto_sort(tv.m_auto_sort),
-    m_query(tv.m_query),
+    m_query(std::move(tv.m_query)),
     m_start(tv.m_start),
     m_end(tv.m_end),
     m_limit(tv.m_limit),
@@ -872,15 +899,16 @@ inline TableViewBase& TableViewBase::operator=(TableViewBase&& tv) noexcept
         m_table->move_registered_view(&tv, this);
 
     m_row_indexes.move_assign(tv.m_row_indexes);
-    m_query = tv.m_query;
+    m_query = std::move(tv.m_query);
     m_num_detached_refs = tv.m_num_detached_refs;
     m_last_seen_version = tv.m_last_seen_version;
     m_auto_sort = tv.m_auto_sort;
     m_start = tv.m_start;
     m_end = tv.m_end;
     m_limit = tv.m_limit;
-    m_linkview_source = tv.m_linkview_source;
-    m_sorting_predicate = tv.m_sorting_predicate;
+    m_linkview_source = std::move(tv.m_linkview_source);
+    m_distinct_columns = tv.m_distinct_columns;
+    m_sorting_predicate = std::move(tv.m_sorting_predicate);
 
     return *this;
 }
@@ -947,8 +975,7 @@ inline DataType TableViewBase::get_column_type(size_t column_ndx) const noexcept
 // Getters
 
 
-inline int64_t TableViewBase::get_int(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline int64_t TableViewBase::get_int(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX(column_ndx, row_ndx);
 
@@ -957,8 +984,7 @@ inline int64_t TableViewBase::get_int(size_t column_ndx, size_t row_ndx) const
     return m_table->get_int(column_ndx, real_ndx);
 }
 
-inline bool TableViewBase::get_bool(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline bool TableViewBase::get_bool(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Bool);
 
@@ -967,8 +993,7 @@ inline bool TableViewBase::get_bool(size_t column_ndx, size_t row_ndx) const
     return m_table->get_bool(column_ndx, real_ndx);
 }
 
-inline DateTime TableViewBase::get_datetime(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline DateTime TableViewBase::get_datetime(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_DateTime);
 
@@ -977,8 +1002,7 @@ inline DateTime TableViewBase::get_datetime(size_t column_ndx, size_t row_ndx) c
     return m_table->get_datetime(column_ndx, real_ndx);
 }
 
-inline float TableViewBase::get_float(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline float TableViewBase::get_float(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Float);
 
@@ -987,8 +1011,7 @@ inline float TableViewBase::get_float(size_t column_ndx, size_t row_ndx) const
     return m_table->get_float(column_ndx, real_ndx);
 }
 
-inline double TableViewBase::get_double(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline double TableViewBase::get_double(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Double);
 
@@ -997,8 +1020,7 @@ inline double TableViewBase::get_double(size_t column_ndx, size_t row_ndx) const
     return m_table->get_double(column_ndx, real_ndx);
 }
 
-inline StringData TableViewBase::get_string(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline StringData TableViewBase::get_string(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_String);
 
@@ -1007,28 +1029,25 @@ inline StringData TableViewBase::get_string(size_t column_ndx, size_t row_ndx) c
     return m_table->get_string(column_ndx, real_ndx);
 }
 
-inline BinaryData TableViewBase::get_binary(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline BinaryData TableViewBase::get_binary(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Binary);
 
     const size_t real_ndx = size_t(m_row_indexes.get(row_ndx));
     REALM_ASSERT(real_ndx != detached_ref);
-    return m_table->get_binary(column_ndx, real_ndx); // Throws
+    return m_table->get_binary(column_ndx, real_ndx);
 }
 
-inline Mixed TableViewBase::get_mixed(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline Mixed TableViewBase::get_mixed(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Mixed);
 
     const size_t real_ndx = size_t(m_row_indexes.get(row_ndx));
     REALM_ASSERT(real_ndx != detached_ref);
-    return m_table->get_mixed(column_ndx, real_ndx); // Throws
+    return m_table->get_mixed(column_ndx, real_ndx);
 }
 
-inline DataType TableViewBase::get_mixed_type(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline DataType TableViewBase::get_mixed_type(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Mixed);
 
@@ -1037,8 +1056,7 @@ inline DataType TableViewBase::get_mixed_type(size_t column_ndx, size_t row_ndx)
     return m_table->get_mixed_type(column_ndx, real_ndx);
 }
 
-inline size_t TableViewBase::get_subtable_size(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline size_t TableViewBase::get_subtable_size(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE_TABLE_OR_MIXED(column_ndx, row_ndx);
 
@@ -1047,8 +1065,7 @@ inline size_t TableViewBase::get_subtable_size(size_t column_ndx, size_t row_ndx
     return m_table->get_subtable_size(column_ndx, real_ndx);
 }
 
-inline size_t TableViewBase::get_link(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline size_t TableViewBase::get_link(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Link);
 
@@ -1072,8 +1089,7 @@ inline ConstTableRef ConstTableView::get_link_target(size_t column_ndx) const no
     return m_table->get_link_target(column_ndx);
 }
 
-inline bool TableViewBase::is_null_link(size_t column_ndx, size_t row_ndx) const
-    noexcept
+inline bool TableViewBase::is_null_link(size_t column_ndx, size_t row_ndx) const noexcept
 {
     REALM_ASSERT_INDEX_AND_TYPE(column_ndx, row_ndx, type_Link);
 
